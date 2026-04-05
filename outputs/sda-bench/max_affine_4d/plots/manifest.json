@@ -1,0 +1,118 @@
+{
+  "source": "/Users/michaliwaniuk/Desktop/OIDA/outputs/sda-bench/max_affine_4d/results.json",
+  "schema": "bench",
+  "warnings": [],
+  "groups": [
+    {
+      "group_id": "partition_01",
+      "group_key": "{\"objective_dimension\":4,\"objective_family\":\"max_affine\",\"objective_id\":\"max_affine_4d\",\"objective_params\":{\"gradients\":[[1.0,0.0,0.0,0.0],[0.0,1.0,0.0,0.0],[0.0,0.0,1.0,0.0],[0.0,0.0,0.0,1.0],[-1.0,-1.0,-1.0,-1.0]],\"intercepts\":[-2.0,1.5,-0.75,-2.5,3.75]}}",
+      "objective_id": "max_affine_4d",
+      "methods": [
+        "sda",
+        "subgradient"
+      ],
+      "deduplicated_runs": [],
+      "generated_plots": [
+        {
+          "plot_id": "objective_iterations",
+          "title": "max_affine_4d objective over iterations",
+          "png": "objective_iterations.png",
+          "html": "objective_iterations.html",
+          "series_labels": [
+            "D=10.0|alpha=1.0|eps=0.001|gamma_mult=1.0|max_iter=100|objective=max_affine_4d|output_dir=None|restrict_to_fd=True | sda | D=10, gamma=1",
+            "D=10.0|alpha=1.0|eps=0.001|gamma_mult=1.0|max_iter=100|objective=max_affine_4d|output_dir=None|restrict_to_fd=True | subgradient | D=10, alpha=1"
+          ]
+        },
+        {
+          "plot_id": "objective_gap_iterations",
+          "title": "max_affine_4d objective gap over iterations",
+          "png": "objective_gap_iterations.png",
+          "html": "objective_gap_iterations.html",
+          "series_labels": [
+            "D=10.0|alpha=1.0|eps=0.001|gamma_mult=1.0|max_iter=100|objective=max_affine_4d|output_dir=None|restrict_to_fd=True | sda | D=10, gamma=1",
+            "D=10.0|alpha=1.0|eps=0.001|gamma_mult=1.0|max_iter=100|objective=max_affine_4d|output_dir=None|restrict_to_fd=True | subgradient | D=10, alpha=1"
+          ]
+        },
+        {
+          "plot_id": "sda_normalized_gap_iterations",
+          "title": "max_affine_4d SDA normalized gap over iterations",
+          "png": "sda_normalized_gap_iterations.png",
+          "html": "sda_normalized_gap_iterations.html",
+          "series_labels": [
+            "D=10.0|alpha=1.0|eps=0.001|gamma_mult=1.0|max_iter=100|objective=max_affine_4d|output_dir=None|restrict_to_fd=True | sda | D=10, gamma=1"
+          ]
+        },
+        {
+          "plot_id": "iterate_norm_iterations",
+          "title": "max_affine_4d iterate norms over iterations",
+          "png": "iterate_norm_iterations.png",
+          "html": "iterate_norm_iterations.html",
+          "series_labels": [
+            "D=10.0|alpha=1.0|eps=0.001|gamma_mult=1.0|max_iter=100|objective=max_affine_4d|output_dir=None|restrict_to_fd=True | sda | D=10, gamma=1",
+            "D=10.0|alpha=1.0|eps=0.001|gamma_mult=1.0|max_iter=100|objective=max_affine_4d|output_dir=None|restrict_to_fd=True | subgradient | D=10, alpha=1"
+          ]
+        },
+        {
+          "plot_id": "objective_time",
+          "title": "max_affine_4d objective over time",
+          "png": "objective_time.png",
+          "html": "objective_time.html",
+          "series_labels": [
+            "D=10.0|alpha=1.0|eps=0.001|gamma_mult=1.0|max_iter=100|objective=max_affine_4d|output_dir=None|restrict_to_fd=True | sda | D=10, gamma=1",
+            "D=10.0|alpha=1.0|eps=0.001|gamma_mult=1.0|max_iter=100|objective=max_affine_4d|output_dir=None|restrict_to_fd=True | subgradient | D=10, alpha=1"
+          ]
+        },
+        {
+          "plot_id": "objective_gap_time",
+          "title": "max_affine_4d objective gap over time",
+          "png": "objective_gap_time.png",
+          "html": "objective_gap_time.html",
+          "series_labels": [
+            "D=10.0|alpha=1.0|eps=0.001|gamma_mult=1.0|max_iter=100|objective=max_affine_4d|output_dir=None|restrict_to_fd=True | sda | D=10, gamma=1",
+            "D=10.0|alpha=1.0|eps=0.001|gamma_mult=1.0|max_iter=100|objective=max_affine_4d|output_dir=None|restrict_to_fd=True | subgradient | D=10, alpha=1"
+          ]
+        },
+        {
+          "plot_id": "iterates_iterations",
+          "title": "max_affine_4d iterates over iterations",
+          "png": "iterates_iterations.png",
+          "html": "iterates_iterations.html",
+          "series_labels": [
+            "D=10.0|alpha=1.0|eps=0.001|gamma_mult=1.0|max_iter=100|objective=max_affine_4d|output_dir=None|restrict_to_fd=True | sda | D=10, gamma=1",
+            "D=10.0|alpha=1.0|eps=0.001|gamma_mult=1.0|max_iter=100|objective=max_affine_4d|output_dir=None|restrict_to_fd=True | subgradient | D=10, alpha=1"
+          ]
+        },
+        {
+          "plot_id": "distance_iterations",
+          "title": "max_affine_4d distance to optimum",
+          "png": "distance_iterations.png",
+          "html": "distance_iterations.html",
+          "series_labels": [
+            "D=10.0|alpha=1.0|eps=0.001|gamma_mult=1.0|max_iter=100|objective=max_affine_4d|output_dir=None|restrict_to_fd=True | sda | D=10, gamma=1",
+            "D=10.0|alpha=1.0|eps=0.001|gamma_mult=1.0|max_iter=100|objective=max_affine_4d|output_dir=None|restrict_to_fd=True | subgradient | D=10, alpha=1"
+          ]
+        },
+        {
+          "plot_id": "subgradient_subgradient_norm_iterations",
+          "title": "max_affine_4d subgradient norm over iterations",
+          "png": "subgradient_subgradient_norm_iterations.png",
+          "html": "subgradient_subgradient_norm_iterations.html",
+          "series_labels": [
+            "D=10.0|alpha=1.0|eps=0.001|gamma_mult=1.0|max_iter=100|objective=max_affine_4d|output_dir=None|restrict_to_fd=True | subgradient | D=10, alpha=1"
+          ]
+        },
+        {
+          "plot_id": "runtime_summary",
+          "title": "max_affine_4d runtime by method",
+          "png": "runtime_summary.png",
+          "html": "runtime_summary.html",
+          "series_labels": [
+            "D=10.0|alpha=1.0|eps=0.001|gamma_mult=1.0|max_iter=100|objective=max_affine_4d|output_dir=None|restrict_to_fd=True | sda | D=10, gamma=1",
+            "D=10.0|alpha=1.0|eps=0.001|gamma_mult=1.0|max_iter=100|objective=max_affine_4d|output_dir=None|restrict_to_fd=True | subgradient | D=10, alpha=1"
+          ]
+        }
+      ],
+      "skipped_plots": []
+    }
+  ]
+}

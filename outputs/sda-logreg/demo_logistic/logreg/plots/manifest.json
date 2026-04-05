@@ -1,0 +1,131 @@
+{
+  "source": "/Users/michaliwaniuk/Desktop/OIDA/outputs/sda-logreg/demo_logistic/logreg/results.json",
+  "schema": "logreg",
+  "warnings": [],
+  "groups": [
+    {
+      "group_id": "partition_01",
+      "group_key": "{\"dataset_path\":\"/Users/michaliwaniuk/Desktop/OIDA/data/demo_logistic.csv\",\"objective_dimension\":4,\"objective_family\":\"logistic_regression\",\"objective_id\":\"demo_logistic_logreg\",\"objective_params\":{\"dataset_path\":\"/Users/michaliwaniuk/Desktop/OIDA/data/demo_logistic.csv\",\"lasso\":false,\"lasso_lambda\":1.0,\"seed\":0,\"test_samples\":60,\"test_size\":0.2,\"train_samples\":240}}",
+      "objective_id": "demo_logistic_logreg",
+      "methods": [
+        "sda",
+        "subgradient",
+        "sklearn"
+      ],
+      "deduplicated_runs": [],
+      "generated_plots": [
+        {
+          "plot_id": "train_loss_iterations",
+          "title": "demo_logistic_logreg train loss over iterations",
+          "png": "train_loss_iterations.png",
+          "html": "train_loss_iterations.html",
+          "series_labels": [
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | sda | D=2, gamma=1",
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | subgradient | D=2, alpha=0.5"
+          ]
+        },
+        {
+          "plot_id": "test_loss_iterations",
+          "title": "demo_logistic_logreg test loss over iterations",
+          "png": "test_loss_iterations.png",
+          "html": "test_loss_iterations.html",
+          "series_labels": [
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | sda | D=2, gamma=1",
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | subgradient | D=2, alpha=0.5"
+          ]
+        },
+        {
+          "plot_id": "test_accuracy_iterations",
+          "title": "demo_logistic_logreg test accuracy over iterations",
+          "png": "test_accuracy_iterations.png",
+          "html": "test_accuracy_iterations.html",
+          "series_labels": [
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | sda | D=2, gamma=1",
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | subgradient | D=2, alpha=0.5"
+          ]
+        },
+        {
+          "plot_id": "nonzero_count_iterations",
+          "title": "demo_logistic_logreg nonzero count over iterations",
+          "png": "nonzero_count_iterations.png",
+          "html": "nonzero_count_iterations.html",
+          "series_labels": [
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | sda | D=2, gamma=1",
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | subgradient | D=2, alpha=0.5"
+          ]
+        },
+        {
+          "plot_id": "sda_normalized_gap_iterations",
+          "title": "demo_logistic_logreg SDA normalized gap over iterations",
+          "png": "sda_normalized_gap_iterations.png",
+          "html": "sda_normalized_gap_iterations.html",
+          "series_labels": [
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | sda | D=2, gamma=1"
+          ]
+        },
+        {
+          "plot_id": "train_loss_time",
+          "title": "demo_logistic_logreg train loss over time",
+          "png": "train_loss_time.png",
+          "html": "train_loss_time.html",
+          "series_labels": [
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | sda | D=2, gamma=1",
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | subgradient | D=2, alpha=0.5"
+          ]
+        },
+        {
+          "plot_id": "test_loss_time",
+          "title": "demo_logistic_logreg test loss over time",
+          "png": "test_loss_time.png",
+          "html": "test_loss_time.html",
+          "series_labels": [
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | sda | D=2, gamma=1",
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | subgradient | D=2, alpha=0.5"
+          ]
+        },
+        {
+          "plot_id": "test_accuracy_time",
+          "title": "demo_logistic_logreg test accuracy over time",
+          "png": "test_accuracy_time.png",
+          "html": "test_accuracy_time.html",
+          "series_labels": [
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | sda | D=2, gamma=1",
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | subgradient | D=2, alpha=0.5"
+          ]
+        },
+        {
+          "plot_id": "parameters_iterations",
+          "title": "demo_logistic_logreg parameters over iterations",
+          "png": "parameters_iterations.png",
+          "html": "parameters_iterations.html",
+          "series_labels": [
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | sda | D=2, gamma=1",
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | subgradient | D=2, alpha=0.5"
+          ]
+        },
+        {
+          "plot_id": "distance_iterations",
+          "title": "demo_logistic_logreg distance to sklearn",
+          "png": "distance_iterations.png",
+          "html": "distance_iterations.html",
+          "series_labels": [
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | sda | D=2, gamma=1",
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | subgradient | D=2, alpha=0.5"
+          ]
+        },
+        {
+          "plot_id": "runtime_summary",
+          "title": "demo_logistic_logreg runtime by solver",
+          "png": "runtime_summary.png",
+          "html": "runtime_summary.html",
+          "series_labels": [
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | sda | D=2, gamma=1",
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | subgradient | D=2, alpha=0.5",
+            "D=2.0|alpha=0.5|dataset=data/demo_logistic.csv|eps=0.001|gamma_mult=1.0|lasso=False|lasso_lambda=1.0|max_iter=80|output_dir=None|restrict_to_fd=False|seed=0|test_size=0.2 | sklearn | saga"
+          ]
+        }
+      ],
+      "skipped_plots": []
+    }
+  ]
+}

@@ -1,0 +1,982 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+
+% ── packages ──────────────────────────────────────────────────────────────────
+\usepackage{algorithm}
+\usepackage{algpseudocode}          % part of algorithmicx bundle
+\usepackage{xcolor}
+
+% ── algpseudocode tweaks ──────────────────────────────────────────────────────
+\algrenewcommand\algorithmicindent{1.2em}
+\algnewcommand\algorithmicinput{\textbf{Input:}}
+\algnewcommand\algorithmicoutput{\textbf{Output:}}
+\algnewcommand\Input{\item[\algorithmicinput]}
+\algnewcommand\Output{\item[\algorithmicoutput]}
+
+% nicer "gets" arrow
+\algrenewcommand{\algorithmiccomment}[1]{\hfill\textcolor{gray}{\(\triangleright\) #1}}
+\geometry{margin=2.5cm}
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue}
+
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newtheorem{assumption}{Assumption}
+
+\title{Theory Chapter for Project 5.1: Dual Averaging \\ \large A concise exposition aligned with Nesterov's paper}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Theoretical Introduction}
+\paragraph{Motivation: why dual averaging is introduced.}
+Nesterov begins with the classical subgradient method for a nonsmooth convex problem
+\begin{equation}
+    \min_{x \in \mathbb{R}^n} f(x).
+\end{equation}
+In the standard scheme one chooses steps $\lambda_k > 0$ and iterates
+\begin{equation}
+    x_{k+1} = x_k - \lambda_k g_k, \qquad g_k \in \partial f(x_k).
+\end{equation}
+The difficulty is that, for nonsmooth functions, subgradients do not vanish near the optimum, so the primal step sizes must go to zero. At the same time, the lower linear model built from the subgradients is more informative when new information is not downweighted too aggressively.
+
+This is the tension emphasized by Nesterov in Section~1.2: in the primal space one needs vanishing effective steps, while in the dual space one would like to aggregate support information with nondecreasing importance. The proposed solution is to use two control sequences: one for aggregating information in the dual space and one for balancing the scale between primal and dual spaces. This is the main idea behind dual averaging.
+
+\paragraph{The minimization problem and basic notation.}
+Following Section~3.1 of the paper, we consider the convex minimization problem
+\begin{equation}
+    \min \{ f(x) : x \in Q \},
+    \label{eq:main-problem}
+\end{equation}
+where $Q$ is a closed convex set and $f$ is convex.
+
+The paper is written in a finite-dimensional vector space $E$ with dual space $E^*$. The pairing between $s \in E^*$ and $x \in E$ is denoted by $\langle s,x \rangle$. A norm $\|\cdot\|$ is fixed on $E$, and the corresponding dual norm on $E^*$ is
+\begin{equation}
+    \|s\|_* = \max\{ \langle s,x \rangle : \|x\| \le 1 \}.
+\end{equation}
+For a basic implementation one may simply take $E = \mathbb{R}^n$ with the Euclidean norm.
+
+\paragraph{Subgradients and the black-box oracle.}
+To solve problem~\eqref{eq:main-problem}, Nesterov assumes access to a black-box oracle that returns a subgradient:
+\begin{equation}
+    G(x) \in \partial f(x).
+\end{equation}
+Recall the definition.
+
+\begin{definition}[Subgradient]
+Let $f$ be convex. A vector $g$ is a subgradient of $f$ at $x$ if
+\begin{equation}
+    f(y) \ge f(x) + \langle g, y-x \rangle \qquad \text{for all } y.
+\end{equation}
+The set of all such vectors is denoted by $\partial f(x)$.
+\end{definition}
+
+This inequality is the key reason why subgradients are useful. Every subgradient defines a global affine lower bound on $f$. Dual averaging will accumulate many such lower bounds and then regularize their average.
+
+\paragraph{Prox-function and prox-center.}
+The geometric core of Nesterov's framework appears in Section~1.4. One assumes that the feasible set $Q$ is equipped with a prox-function $d(x)$.
+
+\begin{assumption}[Prox-function]
+The function $d:Q \to \mathbb{R}$ is continuous and strongly convex on $Q$ with parameter $\sigma>0$, i.e.
+\begin{equation}
+    d(\alpha x + (1-\alpha)y)
+    \le
+    \alpha d(x) + (1-\alpha)d(y) - \frac{\sigma}{2}\alpha(1-\alpha)\|x-y\|^2
+\end{equation}
+for all $x,y \in Q$ and $\alpha \in [0,1]$.
+\end{assumption}
+
+The \emph{prox-center} is defined by
+\begin{equation}
+    x_0 = \arg\min_{x \in Q} d(x),
+\end{equation}
+and we normalize so that $d(x_0)=0$.
+
+The most convenient choice for computations is the Euclidean prox-function
+\begin{equation}
+    d(x) = \frac12 \|x-x_0\|_2^2,
+\end{equation}
+for which $\sigma = 1$. This is exactly the example singled out by Nesterov as the standard Euclidean setting.
+
+\paragraph{The restricted set $F_D$ and support-type functions.}
+At the beginning of Section~2, Nesterov introduces the restricted set
+\begin{equation}
+    F_D = \{x \in Q : d(x) \le D\}, \qquad D \ge 0.
+\end{equation}
+This set is important because dual lower bounds and gap functions are formulated on $F_D$, even when the full feasible set $Q$ is unbounded.
+
+He then defines two support-type functions:
+\begin{equation}
+    \xi_D(s) = \max_{x \in Q} \{ \langle s, x-x_0 \rangle : d(x) \le D \},
+\end{equation}
+\begin{equation}
+    V_\beta(s) = \max_{x \in Q} \{ \langle s, x-x_0 \rangle - \beta d(x) \}, \qquad \beta > 0.
+\end{equation}
+The first function is the support function of $F_D$ shifted by the prox-center. The second one is a smoothed, proximal approximation of that support function.
+
+Their role is central in the paper:
+\begin{itemize}[leftmargin=1.2cm]
+    \item $\xi_D$ appears in the exact gap function,
+    \item $V_\beta$ appears in an upper estimate of the gap,
+    \item the gradient of $V_\beta$ defines the proximal step of the algorithm.
+\end{itemize}
+
+\paragraph{The proximal mapping $\pi_\beta$.}
+Section~2 then introduces the mapping
+\begin{equation}
+    \pi_\beta(s)
+    = \arg\min_{x \in Q} \bigl\{-\langle s,x \rangle + \beta d(x)\bigr\}.
+    \label{eq:pi-beta}
+\end{equation}
+Nesterov shows that
+\begin{equation}
+    \nabla V_\beta(s) = \pi_\beta(s) - x_0,
+\end{equation}
+and that $V_\beta$ has Lipschitz gradient with constant $1/(\beta\sigma)$. For the algorithm, the main practical consequence is that one only needs to compute $\pi_\beta(s)$ exactly.
+
+In the Euclidean case,
+\begin{equation}
+    d(x) = \frac12\|x-x_0\|_2^2,
+\end{equation}
+so \eqref{eq:pi-beta} becomes a projection-type step. If, in addition, $Q=\mathbb{R}^n$, then
+\begin{equation}
+    \pi_\beta(s) = x_0 + \frac{s}{\beta}.
+\end{equation}
+If $Q$ is a box or another simple convex set, then $\pi_\beta$ is a standard projection onto that set.
+
+\paragraph{The generic dual averaging scheme (Section~2).}
+Nesterov's generic dual averaging scheme is defined as follows.
+
+\paragraph{Initialization.}
+Set
+\begin{equation}
+    s_0 = 0 \in E^*,
+\end{equation}
+and choose a nondecreasing sequence $\beta_k$ with $\beta_0>0$.
+
+\paragraph{Iteration.}
+For $k \ge 0$:
+\begin{enumerate}[leftmargin=1.2cm]
+    \item compute $g_k = G(x_k)$,
+    \item choose a weight $\lambda_k > 0$ and set
+    \begin{equation}
+        s_{k+1} = s_k + \lambda_k g_k,
+    \end{equation}
+    \item choose $\beta_{k+1} \ge \beta_k$ and set
+    \begin{equation}
+        x_{k+1} = \pi_{\beta_{k+1}}(-s_{k+1}).
+    \end{equation}
+\end{enumerate}
+This is exactly scheme~(2.14) in the paper.
+
+The interpretation is simple. The vector $s_{k+1}$ stores aggregated dual information, namely a weighted sum of past subgradients. The next primal point is obtained by minimizing this accumulated linear information regularized by the prox-function.
+
+\paragraph{The basic aggregates: primal and dual sequences.}
+Nesterov defines the following aggregated quantities in equation~(2.9):
+\begin{equation}
+    S_k = \sum_{i=0}^k \lambda_i,
+\end{equation}
+\begin{equation}
+    \hat{x}_{k+1} = \frac{1}{S_k}\sum_{i=0}^k \lambda_i x_i,
+\end{equation}
+\begin{equation}
+    s_{k+1} = \sum_{i=0}^k \lambda_i g_i,
+    \qquad
+    \hat{s}_{k+1} = \frac{1}{S_k}s_{k+1}.
+\end{equation}
+Here:
+\begin{itemize}[leftmargin=1.2cm]
+    \item $\hat{x}_{k+1}$ is the averaged primal iterate,
+    \item $s_{k+1}$ is the accumulated dual quantity,
+    \item $\hat{s}_{k+1}$ is the averaged dual iterate.
+\end{itemize}
+For Project~5.1 these are exactly the objects that must be tracked explicitly.
+
+\paragraph{The gap function from Section~2.}
+The quality of the generated sequence is measured by the gap function
+\begin{equation}
+    \delta_k(D)
+    =
+    \max_{x \in F_D}
+    \sum_{i=0}^k \lambda_i \langle g_i, x_i - x \rangle.
+\end{equation}
+Using the notation above, Nesterov rewrites it as
+\begin{equation}
+    \delta_k(D)
+    =
+    \sum_{i=0}^k \lambda_i \langle g_i, x_i - x_0 \rangle + \xi_D(-s_{k+1}).
+\end{equation}
+He also defines the upper gap function
+\begin{equation}
+    \Gamma_k(\beta,D)
+    =
+    \beta D + \sum_{i=0}^k \lambda_i \langle g_i, x_i - x_0 \rangle + V_\beta(-s_{k+1}),
+\end{equation}
+and proves, using Lemma~2, that
+\begin{equation}
+    \delta_k(D) \le \Gamma_k(\beta,D).
+\end{equation}
+This part of the theory matters because it gives a computable quantity that upper-bounds the optimization error.
+
+\paragraph{A general estimate for the gap.}
+The core result of Section~2 is Theorem~1. For the generic DA-scheme it yields
+\begin{equation}
+    \delta_k(D)
+    \le
+    \Gamma_k(\beta_{k+1},D)
+    \le
+    \beta_{k+1}D + \frac{1}{2\sigma}
+    \sum_{i=0}^k \frac{\lambda_i^2}{\beta_i}\|g_i\|_*^2.
+    \label{eq:general-gap-bound}
+\end{equation}
+This inequality explains how the algorithm is balanced:
+\begin{itemize}[leftmargin=1.2cm]
+    \item a larger $\beta_{k+1}$ increases the regularization term $\beta_{k+1}D$,
+    \item a smaller $\beta_i$ worsens the cumulative subgradient term.
+\end{itemize}
+The purpose of the schedule $\beta_k$ is precisely to balance these two contributions.
+
+Theorem~1 also shows that if a primal solution $x^*$ exists in the sense of condition~(2.8), then the sequence of primal test points remains bounded:
+\begin{equation}
+    \frac{1}{2\sigma}\|x_{k+1}-x^*\|^2
+    \le
+    d(x^*) + \frac{1}{2\sigma\beta_{k+1}}
+    \sum_{i=0}^k \frac{\lambda_i^2}{\beta_i}\|g_i\|_*^2.
+\end{equation}
+This boundedness is one of the specific advantages emphasized in the abstract and in Sections~1 and~2 of the paper.
+
+\paragraph{Simple Dual Averages (SDA).}
+For Project~5.1 the most natural variant is the method of simple dual averages from equation~(2.21). Here one chooses
+\begin{equation}
+    \lambda_k = 1
+\end{equation}
+for all $k$, so that
+\begin{equation}
+    s_{k+1} = s_k + g_k.
+\end{equation}
+The scale sequence is defined by
+\begin{equation}
+    \beta_{k+1} = \gamma \hat{\beta}_{k+1},
+\end{equation}
+where $\gamma>0$ and
+\begin{equation}
+    \hat{\beta}_0 = \hat{\beta}_1 = 1,
+    \qquad
+    \hat{\beta}_{i+1} = \hat{\beta}_i + \frac{1}{\hat{\beta}_i}.
+    \label{eq:beta-hat}
+\end{equation}
+This is Nesterov's sequence~(2.19). It satisfies
+\begin{equation}
+    \sqrt{2k-1} \le \hat{\beta}_k \le \frac{1}{1+\sqrt{3}} + \sqrt{2k-1},
+\end{equation}
+so it grows on the order of $\sqrt{k}$.
+
+Thus the SDA iteration is
+\begin{equation}
+    s_{k+1} = s_k + g_k,
+    \qquad
+    x_{k+1} = \pi_{\beta_{k+1}}(-s_{k+1}),
+    \qquad
+    \beta_{k+1} = \gamma \hat{\beta}_{k+1}.
+\end{equation}
+Theorem~2 in the paper states that if $\|g_k\|_* \le L$, then
+\begin{equation}
+    \delta_k(D) \le \hat{\beta}_{k+1}\left(\gamma D + \frac{L^2}{2\sigma\gamma}\right).
+    \label{eq:sda-delta}
+\end{equation}
+
+\paragraph{The lower linear model (Section~3.1).}
+When the generic framework is specialized to convex minimization, Section~3.1 introduces the lower model
+\begin{equation}
+    l_k(x)
+    =
+    \frac{1}{S_k}
+    \sum_{i=0}^k \lambda_i\bigl(f(x_i) + \langle g_i, x-x_i \rangle\bigr),
+    \qquad g_i \in \partial f(x_i).
+\end{equation}
+Each term in the sum is a lower affine approximation of $f$, hence by convexity
+\begin{equation}
+    l_k(x) \le f(x) \qquad \text{for all } x \in Q.
+\end{equation}
+Nesterov then defines
+\begin{equation}
+    \hat{f}_k(D) = \min\{ l_k(x) : x \in F_D \},
+    \qquad
+    f_D^* = \min\{ f(x) : x \in F_D \}.
+\end{equation}
+Since $l_k(x) \le f(x)$, one immediately gets
+\begin{equation}
+    \hat{f}_k(D) \le f_D^*.
+\end{equation}
+Therefore $\hat{f}_k(D)$ is a computable lower bound on the optimal value.
+
+\paragraph{The stopping criterion and its meaning.}
+Still in Section~3.1, Nesterov proves the identity
+\begin{equation}
+    \frac{1}{S_k}\delta_k(D)
+    =
+    \frac{1}{S_k}\sum_{i=0}^k \lambda_i f(x_i) - \hat{f}_k(D)
+    \ge
+    f(\hat{x}_{k+1}) - f_D^*.
+    \label{eq:main-stopping}
+\end{equation}
+This is the exact reason why the method is useful for Project~5.1. The left-hand side is computable from the iterates, while the right-hand side is the true optimization error of the averaged primal point. Hence
+\begin{equation}
+    \mathrm{gap}_k := \frac{1}{S_k}\delta_k(D)
+\end{equation}
+acts as a rigorous stopping criterion.
+
+In words: if the computed gap is small, then the averaged point $\hat{x}_{k+1}$ is guaranteed to be close to the optimum on $F_D$.
+
+\paragraph{The convergence rate for convex minimization.}
+Combining Theorem~2, the growth estimate for $\hat{\beta}_k$, and inequality~\eqref{eq:main-stopping}, Nesterov obtains in equation~(3.3):
+\begin{equation}
+    f(\hat{x}_{k+1}) - f_D^*
+    \le
+    \frac{0.5 + \sqrt{2k+1}}{k+1}
+    \left(
+        \gamma D + \frac{L^2}{2\sigma\gamma}
+    \right).
+    \label{eq:rate-minimization}
+\end{equation}
+Therefore the method has the usual nonsmooth rate $O(k^{-1/2})$.
+
+Nesterov also notes that a reasonable choice of the parameter is
+\begin{equation}
+    \gamma^* = \frac{L}{\sqrt{2\sigma D}},
+\end{equation}
+which balances the two terms in the constant.
+
+\paragraph{The explicit SDA form used in practice.}
+A particularly useful observation from Section~3.1 is that SDA can be written directly in terms of the accumulated lower model:
+\begin{equation}
+    x_{k+1}
+    =
+    \arg\min_{x \in Q}
+    \left\{
+        \frac{1}{k+1}
+        \sum_{i=0}^k
+        \bigl[f(x_i)+\langle g_i, x-x_i \rangle\bigr]
+        + \mu_k d(x)
+    \right\},
+    \qquad k \ge 0,
+    \label{eq:sda-lower-model}
+\end{equation}
+where in the exact SDA schedule one takes
+\begin{equation}
+    \mu_k = \frac{\beta_{k+1}}{k+1}.
+\end{equation}
+This is equation~(3.4) in the paper. It shows the algorithm in a way that is especially convenient for implementation and explanation: at each step one minimizes the average of past linearizations plus a prox regularizer.
+
+\paragraph{The primal-dual interpretation (Section~3.2).}
+Section~3.2 explains why the method is genuinely primal-dual. For simplicity, Nesterov assumes that the prox-center is at the origin,
+\begin{equation}
+    x_0 = 0.
+\end{equation}
+Then, provided an optimal solution exists and $D \ge d(x^*)$, the restricted primal problem is
+\begin{equation}
+    f^* = \min\{ f(x) : x \in F_D \}.
+\end{equation}
+Now define the conjugate function
+\begin{equation}
+    f^*(s) = \sup_{x \in E} \bigl[ \langle s,x \rangle - f(x) \bigr].
+\end{equation}
+Using the Fenchel representation
+\begin{equation}
+    f(x) = \max_s \bigl[ \langle s,x \rangle - f^*(s) \bigr],
+\end{equation}
+Nesterov rewrites the primal problem in dual form:
+\begin{equation}
+    f^* = \max_{s \in \mathrm{dom}\,f^*} \bigl[-\xi_D(-s) - f^*(s)\bigr].
+\end{equation}
+Equivalently,
+\begin{equation}
+    -f^* = \min_s \bigl[ f^*(s) + \xi_D(-s) : s \in \mathrm{dom}\,f^* \bigr].
+\end{equation}
+This is equation~(3.10) in the paper.
+
+\paragraph{The primal-dual gap function.}
+Nesterov then combines the primal and dual problems into the single nonnegative function
+\begin{equation}
+    \psi_D(x,s) = f(x) + f^*(s) + \xi_D(-s).
+\end{equation}
+The corresponding primal-dual problem is
+\begin{equation}
+    0 = \min\{ \psi_D(x,s) : x \in Q,\ s \in \mathrm{dom}\,f^* \}.
+\end{equation}
+This function is the exact primal-dual gap for the restricted minimization problem. Theorem~4 states that the DA-generated averages satisfy
+\begin{equation}
+    \psi_D(\hat{x}_{k+1}, \hat{s}_{k+1}) \le \frac{1}{S_k}\delta_k(D).
+    \label{eq:primal-dual-gap}
+\end{equation}
+So the same computable quantity that controls the primal error also controls the primal-dual certificate.
+
+This is the precise mathematical meaning of the statement that dual averaging is a primal-dual method: the algorithm does not only produce a good primal point, it also produces a feasible dual approximation whose joint gap with the primal point goes to zero.
+
+\section{Assumptions}
+\begin{enumerate}[label=(A\arabic*),leftmargin=1.2cm]
+    \item $Q$ is a closed convex set and is simple enough so that $\pi_\beta(s)$ can be computed exactly.
+    \item $f$ is convex on $Q$.
+    \item The oracle can return a subgradient $G(x) \in \partial f(x)$.
+    \item The prox-function $d$ is strongly convex with parameter $\sigma>0$.
+    \item The subgradients are uniformly bounded: there exists $L>0$ such that
+    \begin{equation}
+        \|g\|_* \le L \qquad \forall g \in \partial f(x),\ \forall x \in Q.
+    \end{equation}
+    \item There exists a solution $x^*$ with $d(x^*) \le D$.
+\end{enumerate}
+Under these assumptions the SDA method is well defined, its iterates remain bounded, and the computable gap provides a rigorous stopping rule.
+
+% \textsc{\section{What should be implemented from this theory}
+% For Project~5.1, the theory above translates into the following practical tasks:
+% \begin{enumerate}[leftmargin=1.2cm]
+%     \item choose a convex problem of the form $\min\{f(x):x\in Q\}$,
+%     \item define the oracle $G(x) \in \partial f(x)$,
+%     \item choose a prox-function $d(x)$, preferably Euclidean,
+%     \item implement the SDA recursion
+%     \begin{equation}
+%         s_{k+1} = s_k + g_k,
+%         \qquad
+%         x_{k+1} = \pi_{\beta_{k+1}}(-s_{k+1}),
+%     \end{equation}
+%     \item compute the averaged primal point $\hat{x}_{k+1}$,
+%     \item compute the lower model $l_k$ and the lower bound $\hat{f}_k(D)$,
+%     \item use \eqref{eq:main-stopping} as the stopping criterion.
+% \end{enumerate}}
+% This list is directly consistent with the role of Sections~2, 3.1 and~3.2 in Nesterov's paper.
+
+\section{Implementable form of the Simple Dual Averaging method}
+
+We consider the convex problem
+\begin{equation}
+    \min_{x \in Q} f(x),
+\end{equation}
+where \(Q \subseteq E\) is a closed convex set, \(G(x)\in\partial f(x)\) is a subgradient
+oracle, and \(d:Q\to\mathbb{R}\) is a prox-function with prox-center
+\begin{equation}
+    x_0 = \arg\min_{x\in Q} d(x), 
+    \qquad d(x_0)=0.
+\end{equation}
+
+We also define the restricted set
+\begin{equation}
+    F_D := \{x\in Q : d(x)\le D\},
+\end{equation}
+for a chosen parameter \(D>0\) such that ideally \(x^\star \in F_D\).
+
+The prox-mapping is
+\begin{equation}
+    \pi_\beta(s) := \arg\min_{x\in Q}\left\{-\langle s,x\rangle + \beta d(x)\right\},
+    \qquad \beta > 0.
+\end{equation}
+
+For SDA we use unit weights
+\begin{equation}
+    \lambda_k \equiv 1,
+    \qquad
+    S_k := \sum_{i=0}^k \lambda_i = k+1.
+\end{equation}
+
+The scaling sequence is chosen as
+\begin{equation}
+    \hat\beta_0 = \hat\beta_1 = 1,
+    \qquad
+    \hat\beta_{k+1} = \hat\beta_k + \frac{1}{\hat\beta_k},
+    \qquad k\ge 1,
+\end{equation}
+and then
+\begin{equation}
+    \beta_{k+1} = \gamma \hat\beta_{k+1},
+\end{equation}
+where \(\gamma>0\) is a user-chosen constant.
+
+\paragraph{State variables.}
+At iteration \(k\), maintain:
+\begin{align}
+    s_{k+1} &= \sum_{i=0}^k g_i, \\
+    \hat x_{k+1} &= \frac{1}{k+1}\sum_{i=0}^k x_i.
+\end{align}
+
+\paragraph{Lower model and lower bound.}
+Define the accumulated lower linear model
+\begin{equation}
+    l_k(x) := \frac{1}{k+1}\sum_{i=0}^k
+    \left[f(x_i) + \langle g_i, x-x_i\rangle\right],
+\end{equation}
+and its lower bound over the restricted set
+\begin{equation}
+    \hat f_k(D) := \min_{x\in F_D} l_k(x).
+\end{equation}
+
+The gap can then be computed in either of the equivalent forms
+\begin{align}
+    \delta_k(D)
+    &= \sum_{i=0}^k f(x_i) - (k+1)\hat f_k(D), \\
+    &= \sum_{i=0}^k \langle g_i, x_i-x_0\rangle + \xi_D(-s_{k+1}),
+\end{align}
+where
+\begin{equation}
+    \xi_D(s) := \max_{x\in Q}\left\{\langle s, x-x_0\rangle : d(x)\le D\right\}
+    = \max_{x\in F_D}\langle s, x-x_0\rangle.
+\end{equation}
+
+The normalized primal-dual gap is therefore
+\begin{equation}
+    \frac{\delta_k(D)}{k+1}
+    = \frac{1}{k+1}\sum_{i=0}^k f(x_i) - \hat f_k(D),
+\end{equation}
+and it upper-bounds the optimization error:
+\begin{equation}
+    f(\hat x_{k+1}) - f_D^\star
+    \le
+    \frac{\delta_k(D)}{k+1},
+    \qquad
+    f_D^\star := \min_{x\in F_D} f(x).
+\end{equation}
+
+\paragraph{Stopping criterion.}
+Given a tolerance \(\varepsilon>0\), stop when
+\begin{equation}
+    \frac{\delta_k(D)}{k+1}
+    =
+    \frac{1}{k+1}\sum_{i=0}^k f(x_i) - \hat f_k(D)
+    \le \varepsilon.
+    \label{eq:main-stopping}
+\end{equation}
+
+\paragraph{Equivalent primal update.}
+The SDA update
+\begin{equation}
+    x_{k+1} = \pi_{\beta_{k+1}}(-s_{k+1})
+\end{equation}
+is equivalent to
+\begin{equation}
+    x_{k+1}
+    =
+    \arg\min_{x\in Q}
+    \left\{
+        \frac{1}{k+1}\sum_{i=0}^k
+        \left[f(x_i)+\langle g_i, x-x_i\rangle\right]
+        + \mu_k d(x)
+    \right\},
+\end{equation}
+with
+\begin{equation}
+    \mu_k = \frac{\beta_{k+1}}{k+1}.
+\end{equation}
+
+% \paragraph{Pseudo-code.}
+% \begin{enumerate}
+%     \item Choose:
+%     \begin{itemize}
+%         \item feasible starting point \(x_0\in Q\),
+%         \item prox-function \(d(x)\),
+%         \item parameter \(\gamma>0\),
+%         \item restriction level \(D>0\),
+%         \item tolerance \(\varepsilon>0\).
+%     \end{itemize}
+
+%     \item Initialize:
+%     \begin{equation}
+%         s_0 = 0,
+%         \qquad
+%         \hat\beta_0=\hat\beta_1=1,
+%         \qquad
+%         \texttt{sum\_x}=x_0,
+%         \qquad
+%         \texttt{sum\_f}=f(x_0).
+%     \end{equation}
+
+%     \item For \(k=0,1,2,\dots\):
+%     \begin{enumerate}
+%         \item compute a subgradient
+%         \begin{equation}
+%             g_k = G(x_k)\in\partial f(x_k);
+%         \end{equation}
+
+%         \item update the dual aggregate
+%         \begin{equation}
+%             s_{k+1} = s_k + g_k;
+%         \end{equation}
+
+%         \item update the scaling sequence
+%         \begin{equation}
+%             \hat\beta_{k+1} =
+%             \begin{cases}
+%                 1, & k=0,\\[2mm]
+%                 \hat\beta_k + \dfrac{1}{\hat\beta_k}, & k\ge 1,
+%             \end{cases}
+%             \qquad
+%             \beta_{k+1} = \gamma \hat\beta_{k+1};
+%         \end{equation}
+
+%         \item compute the next primal iterate
+%         \begin{equation}
+%             x_{k+1} = \pi_{\beta_{k+1}}(-s_{k+1})
+%             =
+%             \arg\min_{x\in Q}\{-\langle -s_{k+1},x\rangle + \beta_{k+1} d(x)\};
+%         \end{equation}
+
+%         \item evaluate \(f(x_{k+1})\) if the stopping rule is to be checked;
+
+%         \item update the running sums
+%         \begin{align}
+%             \texttt{sum\_x} &\leftarrow \texttt{sum\_x} + x_{k+1},\\
+%             \texttt{sum\_f} &\leftarrow \texttt{sum\_f} + f(x_{k+1});
+%         \end{align}
+
+%         \item form the averaged primal iterate
+%         \begin{equation}
+%             \hat x_{k+1} = \frac{1}{k+1}\sum_{i=0}^k x_i;
+%         \end{equation}
+
+%         \item compute either:
+%         \begin{enumerate}
+%             \item the lower model
+%             \begin{equation}
+%                 l_k(x)=\frac{1}{k+1}\sum_{i=0}^k
+%                 \left[f(x_i)+\langle g_i,x-x_i\rangle\right],
+%             \end{equation}
+%             then
+%             \begin{equation}
+%                 \hat f_k(D)=\min_{x\in F_D} l_k(x),
+%             \end{equation}
+%             and
+%             \begin{equation}
+%                 \delta_k(D)=\sum_{i=0}^k f(x_i)-(k+1)\hat f_k(D);
+%             \end{equation}
+%             or
+%             \item directly the support-form gap
+%             \begin{equation}
+%                 \delta_k(D)=\sum_{i=0}^k \langle g_i,x_i-x_0\rangle + \xi_D(-s_{k+1}).
+%             \end{equation}
+%         \end{enumerate}
+
+%         \item stop if
+%         \begin{equation}
+%             \frac{\delta_k(D)}{k+1}\le \varepsilon.
+%         \end{equation}
+%     \end{enumerate}
+% \end{enumerate}
+
+\paragraph{Euclidean implementation.}
+If
+\begin{equation}
+    d(x)=\frac12\|x-x_0\|_2^2,
+\end{equation}
+then
+\begin{equation}
+    \pi_\beta(s)
+    =
+    \arg\min_{x\in Q}\left\{-\langle s,x\rangle + \frac{\beta}{2}\|x-x_0\|_2^2\right\}.
+\end{equation}
+In the unconstrained case \(Q=E=\mathbb{R}^n\), this has the closed form
+\begin{equation}
+    \pi_\beta(s)=x_0+\frac{1}{\beta}s,
+\end{equation}
+hence
+\begin{equation}
+    x_{k+1}=x_0-\frac{1}{\beta_{k+1}}s_{k+1}.
+\end{equation}
+If \(Q\neq E\), then \(x_{k+1}\) is the Euclidean prox/projection step defined by the same minimization problem above.
+
+
+\begin{algorithm}[H]
+\caption{Simple Dual Averaging (SDA) with support-form gap}
+\label{alg:sda-impl-friendly}
+\begin{algorithmic}[1]
+
+\Input{
+  prox-center $x_0 \in Q$, prox-function $d(\cdot)$, scaling parameter $\gamma>0$,
+  restriction level $D>0$ such that $F_D:=\{x\in Q:\ d(x)\le D\}$ contains an optimal solution,
+  tolerance $\varepsilon>0$
+}
+\Output{%
+  averaged iterate $\hat x_k$ such that $\delta_k(D)/(k+1) \le \varepsilon$
+}
+
+\State $s_0 \gets 0$
+\State $\hat\beta_0 \gets 1$
+\State $k \gets 0$
+
+\State $\hat x_{0} \gets x_0$ \Comment{$x_0$ is the first primal iterate}
+\State $\texttt{gapAccum}_0 \gets 0$
+
+\While{true}
+
+  \State $g_k \gets G(x_k)\in \partial f(x_k)$
+
+  \State $s_{k+1} \gets s_k + g_k$ \Comment{dual averaging accumulator}
+
+  \If{$k = 0$} \Comment{scaling sequence}
+    \State $\hat\beta_{k+1} \gets 1$
+  \Else
+    \State $\hat\beta_{k+1} \gets \hat\beta_k + 1/\hat\beta_k$
+  \EndIf
+  \State $\beta_{k+1} \gets \gamma \hat\beta_{k+1}$
+
+  \State $x_{k+1} \gets \pi_{\beta_{k+1}}(-s_{k+1})
+  = \arg\min_{x\in Q}\left\{\langle s_{k+1},x\rangle + \beta_{k+1} d(x)\right\}$ \Comment{next primal iterate}
+
+  \State $\hat x_{k+1} \gets \dfrac{k\,\hat x_k + x_k}{k+1}$ \Comment{update running average of $x_0,\dots,x_k$}
+
+  \State $\texttt{gapAccum}_{k+1} \gets \texttt{gapAccum}_k + \langle g_k,\, x_k - x_0\rangle$ \Comment{support-form gap: $\delta_k(D)$}
+  \State $\delta_k(D) \gets \texttt{gapAccum}_{k+1} + \xi_D(-s_{k+1})$
+
+  \If{$\delta_k(D)/(k+1) \le \varepsilon$}
+    \State \Return $\hat x_{k+1}$
+  \EndIf
+
+  \State $k \gets k+1$
+
+\EndWhile
+
+\end{algorithmic}
+\end{algorithm}
+
+
+\section{Experimental Setup}
+
+\subsection{Experiment 1: Toy Nonsmooth Convex Function}
+
+The first experiment is designed to study the qualitative behavior of the SDA method on a simple nonsmooth convex objective, as well as the influence of the parameters $D$ and $\gamma$.
+
+We consider the one-dimensional function
+\[
+f(x)=|x-a|,
+\]
+with $Q=\mathbb{R}$ and Euclidean prox-function
+\[
+d(x)=\frac12(x-x_0)^2.
+\]
+We choose $x_0=0$.
+
+The subgradient is given by
+\[
+g(x)=
+\begin{cases}
+1, & x>a,\\
+-1, & x<a,\\
+[-1,1], & x=a.
+\end{cases}
+\]
+
+Since $|g(x)|\le 1$, we may take
+\[
+L=1.
+\]
+
+The prox mapping becomes
+\[
+x_{k+1}=\arg\min_x \left\{ s_{k+1}x+\beta_{k+1}\frac12(x-x_0)^2 \right\}
+= x_0-\frac{s_{k+1}}{\beta_{k+1}}.
+\]
+
+For SDA, the scaling sequence is defined by
+\[
+\hat\beta_0=\hat\beta_1=1,
+\qquad
+\hat\beta_{k+1}=\hat\beta_k+\frac1{\hat\beta_k},
+\qquad
+\beta_{k+1}=\gamma \hat\beta_{k+1}.
+\]
+
+The theoretical choice of the parameter $\gamma$ is
+\[
+\gamma^*=\frac{L}{\sqrt{2\sigma D}}.
+\]
+Since in the Euclidean setting $\sigma=1$, we have
+\[
+\gamma^*=\frac{L}{\sqrt{2D}}.
+\]
+
+The experiments will compare three values:
+\[
+\gamma\in\left\{0.5\gamma^*,\;\gamma^*,\;2\gamma^*\right\}.
+\]
+
+The restriction parameter $D$ will also be varied in order to study its influence on the stopping criterion and the convergence speed.
+
+The following quantities will be recorded:
+\begin{itemize}
+\item raw iterates $x_k$,
+\item averaged iterates $\hat x_k$,
+\item dual accumulation sequence $s_k$,
+\item duality gap certificate $\delta_k(D)/(k+1)$,
+\item objective values $f(x_k)$ and $f(\hat x_k)$.
+\end{itemize}
+
+\subsection{Experiment 2: Constrained Logistic Regression}
+
+The second experiment applies SDA to logistic regression with an explicit Euclidean norm constraint.
+
+We consider the optimization problem
+\[
+\min_{w\in Q} J(w),
+\]
+where
+\[
+Q=\left\{w\in\mathbb{R}^d:\|w\|_2\le R\right\},
+\]
+and
+\[
+J(w)=\frac1m\sum_{i=1}^m
+\left(\log\left(1+\exp(x_i^\top w)\right)-y_i x_i^\top w\right),
+\]
+with labels $y_i\in\{0,1\}$.
+
+The Euclidean prox-function is chosen as
+\[
+d(w)=\frac12\|w\|_2^2,
+\qquad x_0=0.
+\]
+
+Since every feasible point satisfies $\|w\|_2\le R$, we obtain
+\[
+d(w)=\frac12\|w\|_2^2\le \frac{R^2}{2},
+\]
+which motivates the choice
+\[
+D=\frac{R^2}{2}.
+\]
+
+Different values of $R$ will be tested in order to study the effect of constraint-based regularization. Small values of $R$ correspond to stronger regularization, while large values of $R$ make the problem closer to unconstrained logistic regression.
+
+The gradient of the logistic loss is
+\[
+\nabla J(w)=\frac1m X^\top(\hat y-y),
+\]
+where $\hat y$ denotes the vector of predicted probabilities,
+\[
+\hat y_i=\frac{1}{1+\exp(-x_i^\top w)}.
+\]
+
+To estimate the constant $L$, note that each component of $\hat y-y$ belongs to $[-1,1]$. Therefore,
+\[
+\left\|\frac1m X^\top(\hat y-y)\right\|_2
+\le
+\frac1m\sum_{i=1}^m \|x_i\|_2.
+\]
+Thus we use the estimate
+\[
+L\le \frac1m\sum_{i=1}^m \|x_i\|_2.
+\]
+
+Since $\sigma=1$ in the Euclidean case and $D=R^2/2$, the theoretical value of $\gamma$ becomes
+\[
+\gamma^*=\frac{L}{\sqrt{2D}}=\frac{L}{R}.
+\]
+
+Again, the following values will be compared:
+\[
+\gamma\in\left\{0.5\gamma^*,\;\gamma^*,\;2\gamma^*\right\}.
+\]
+
+The following quantities will be monitored:
+\begin{itemize}
+\item training loss,
+\item test accuracy,
+\item norm of the iterate $\|w_k\|_2$,
+\item duality gap certificate $\delta_k(D)/(k+1)$,
+\item number of iterations required to satisfy the stopping criterion.
+\end{itemize}
+
+\subsection{Experiment 3: Lasso Logistic Regression}
+
+The third experiment considers logistic regression with an additional $\ell_1$ penalty:
+\[
+J_{\mathrm{lasso}}(w)=
+\frac1m\sum_{i=1}^m
+\left(\log\left(1+\exp(x_i^\top w)\right)-y_i x_i^\top w\right)
++
+\frac{\lambda}{m}\|w\|_1.
+\]
+Again, the labels satisfy $y_i\in\{0,1\}$.
+
+This objective is convex but nonsmooth, which makes it particularly suitable for testing SDA.
+
+We again use the Euclidean prox-function
+\[
+d(w)=\frac12\|w\|_2^2,
+\qquad x_0=0.
+\]
+
+A valid subgradient of the lasso logistic objective is
+\[
+\partial_w J_{\mathrm{lasso}}
+=
+\frac1m X^\top(\hat y-y)
++
+\frac{\lambda}{m}s,
+\]
+where
+\[
+s_j\in \partial |w_j|,
+\]
+that is,
+\[
+s_j=
+\begin{cases}
++1, & w_j>0,\\
+-1, & w_j<0,\\
+\text{any value in }[-1,1], & w_j=0.
+\end{cases}
+\]
+
+To estimate the constant $L$, observe that
+\[
+\left\|\frac1m X^\top(\hat y-y)\right\|_2
+\le
+\frac1m\sum_{i=1}^m \|x_i\|_2,
+\]
+and
+\[
+\|s\|_2\le \sqrt{d},
+\]
+where $d$ is the number of features.
+
+Therefore, we may use the bound
+\[
+L
+\le
+\frac1m\sum_{i=1}^m \|x_i\|_2
++
+\frac{\lambda}{m}\sqrt{d}.
+\]
+
+The theoretical value of the scaling parameter is again chosen as
+\[
+\gamma^*=\frac{L}{\sqrt{2D}}.
+\]
+
+Since the lasso problem is unconstrained, $D$ does not arise naturally from the feasible set. Therefore, in this experiment the main parameter of interest is $\lambda$, while $D$ will be fixed using a sufficiently large estimate based on the norm of a reference solution.
+
+The experiments will compare:
+\begin{itemize}
+\item different values of $\lambda$,
+\item different values of $\gamma\in\{0.5\gamma^*,\gamma^*,2\gamma^*\}$.
+\end{itemize}
+
+The following quantities will be measured:
+\begin{itemize}
+\item training loss,
+\item test accuracy,
+\item number of nonzero coefficients,
+\item duality gap certificate $\delta_k(D)/(k+1)$,
+\item convergence of the averaged iterate $\hat w_k$.
+\end{itemize}
+
+
+\section*{Reference}
+Y. Nesterov, \emph{Primal-dual subgradient methods for convex problems}, Mathematical Programming, Series B, 120 (2009), pp.~221--259.
+
+\end{document}
