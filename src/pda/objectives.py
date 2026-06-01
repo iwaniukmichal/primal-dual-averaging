@@ -339,6 +339,154 @@ def _make_max_affine_nd(
     )
 
 
+def _solve_simplex_max_affine(
+    gradients_array: FloatArray,
+    intercepts_array: FloatArray,
+) -> tuple[FloatArray, float]:
+    """Solve `min max_i <a_i, x> + b_i` over the probability simplex."""
+    from scipy.optimize import linprog
+
+    dimension = gradients_array.shape[1]
+    objective = np.zeros(dimension + 1, dtype=float)
+    objective[-1] = 1.0
+
+    lhs = np.column_stack([gradients_array, -np.ones(gradients_array.shape[0])])
+    rhs = -intercepts_array
+    equality_lhs = np.zeros((1, dimension + 1), dtype=float)
+    equality_lhs[0, :dimension] = 1.0
+    equality_rhs = np.asarray([1.0], dtype=float)
+    bounds = [(0.0, None)] * dimension + [(None, None)]
+
+    result = linprog(
+        objective,
+        A_ub=lhs,
+        b_ub=rhs,
+        A_eq=equality_lhs,
+        b_eq=equality_rhs,
+        bounds=bounds,
+        method="highs",
+    )
+    if not result.success:
+        raise ValueError(f"Unable to solve simplex max-affine LP: {result.message}")
+
+    minimizer = np.asarray(result.x[:dimension], dtype=float)
+    minimum_value = float(result.x[-1])
+    return minimizer, minimum_value
+
+
+def _make_simplex_linear_objective(
+    objective_id: str,
+    *,
+    coefficients: Sequence[float],
+) -> ObjectiveDefinition:
+    coefficients_array = _to_float_array(coefficients)
+    dimension = len(coefficients_array)
+    minimizer = np.zeros(dimension, dtype=float)
+    minimizer[int(np.argmin(coefficients_array))] = 1.0
+
+    def objective(x: ObjectiveValue) -> float:
+        x_value = _as_vector(x, dimension=dimension)
+        return float(coefficients_array @ x_value)
+
+    def subgradient(x: ObjectiveValue) -> FloatArray:
+        _as_vector(x, dimension=dimension)
+        return coefficients_array.copy()
+
+    return ObjectiveDefinition(
+        id=objective_id,
+        family="simplex_linear",
+        name=f"{dimension}D simplex linear objective",
+        params={"coefficients": _json_list(coefficients_array)},
+        dimension=dimension,
+        lipschitz_constant=float(np.max(np.abs(coefficients_array))),
+        minimum_value=float(objective(minimizer)),
+        minimizer=minimizer.copy(),
+        objective=objective,
+        subgradient=subgradient,
+    )
+
+
+def _make_simplex_max_affine_objective(
+    objective_id: str,
+    *,
+    gradients: Sequence[Sequence[float]],
+    intercepts: Sequence[float],
+) -> ObjectiveDefinition:
+    gradients_array = np.asarray(gradients, dtype=float)
+    intercepts_array = _to_float_array(intercepts)
+
+    if gradients_array.ndim != 2:
+        raise ValueError("gradients must define a matrix.")
+    if gradients_array.shape[0] != len(intercepts_array):
+        raise ValueError("Need one intercept per affine piece.")
+
+    dimension = gradients_array.shape[1]
+    minimizer, minimum_value = _solve_simplex_max_affine(gradients_array, intercepts_array)
+
+    def objective(x: ObjectiveValue) -> float:
+        x_value = _as_vector(x, dimension=dimension)
+        return float(np.max(gradients_array @ x_value + intercepts_array))
+
+    def subgradient(x: ObjectiveValue) -> FloatArray:
+        x_value = _as_vector(x, dimension=dimension)
+        values = gradients_array @ x_value + intercepts_array
+        active_index = int(np.argmax(values))
+        return gradients_array[active_index].copy()
+
+    return ObjectiveDefinition(
+        id=objective_id,
+        family="simplex_max_affine",
+        name=f"{dimension}D simplex max-affine objective",
+        params={
+            "gradients": [_json_list(row) for row in gradients_array.tolist()],
+            "intercepts": _json_list(intercepts_array),
+        },
+        dimension=dimension,
+        lipschitz_constant=float(np.max(np.max(np.abs(gradients_array), axis=1))),
+        minimum_value=minimum_value,
+        minimizer=minimizer.copy(),
+        objective=objective,
+        subgradient=subgradient,
+    )
+
+
+def _make_boxed_max_affine_from_scales(
+    objective_id: str,
+    *,
+    scales: Sequence[float],
+) -> ObjectiveDefinition:
+    scales_array = _to_float_array(scales)
+    dimension = len(scales_array)
+    minimizer = np.zeros(dimension, dtype=float)
+
+    def objective(x: ObjectiveValue) -> float:
+        x_value = _as_vector(x, dimension=dimension)
+        return float(np.max(scales_array * np.abs(x_value)))
+
+    def subgradient(x: ObjectiveValue) -> FloatArray:
+        x_value = _as_vector(x, dimension=dimension)
+        values = scales_array * np.abs(x_value)
+        active_index = int(np.argmax(values))
+        gradient = np.zeros(dimension, dtype=float)
+        gradient[active_index] = scales_array[active_index] * _sign_with_zero(
+            float(x_value[active_index])
+        )
+        return gradient
+
+    return ObjectiveDefinition(
+        id=objective_id,
+        family="ill_conditioned_max_affine",
+        name=f"{dimension}D ill-conditioned max-affine objective",
+        params={"scales": _json_list(scales_array)},
+        dimension=dimension,
+        lipschitz_constant=float(np.max(scales_array)),
+        minimum_value=0.0,
+        minimizer=minimizer.copy(),
+        objective=objective,
+        subgradient=subgradient,
+    )
+
+
 OBJECTIVE_REGISTRY: Dict[str, ObjectiveDefinition] = {
     "abs_a2": _make_abs_shift_objective("abs_a2", a=2.0),
     "weighted_l1_shift_1d": _make_weighted_l1_shift_1d(
@@ -375,6 +523,43 @@ OBJECTIVE_REGISTRY: Dict[str, ObjectiveDefinition] = {
             [-1.0, -1.0, -1.0, -1.0],
         ],
         intercepts=[-2.0, 1.5, -0.75, -2.5, 3.75],
+    ),
+    "ill_conditioned_l1_shift_8d": _make_weighted_l1_shift_nd(
+        "ill_conditioned_l1_shift_8d",
+        shifts=[2.0, -1.5, 1.0, 3.0, -2.0, 0.5, 1.5, -0.75],
+        weights=[0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0, 25.0],
+    ),
+    "ill_conditioned_max_affine_8d": _make_boxed_max_affine_from_scales(
+        "ill_conditioned_max_affine_8d",
+        scales=[0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0, 25.0],
+    ),
+    "simplex_linear_8d": _make_simplex_linear_objective(
+        "simplex_linear_8d",
+        coefficients=[0.8, -0.4, 1.2, 0.1, -0.9, 0.3, 0.6, -0.2],
+    ),
+    "simplex_max_affine_8d": _make_simplex_max_affine_objective(
+        "simplex_max_affine_8d",
+        gradients=[
+            [1.0, -0.5, 0.2, 0.0, -0.3, 0.4, 0.1, -0.2],
+            [-0.4, 0.8, -0.1, 0.3, 0.2, -0.5, 0.6, 0.0],
+            [0.2, 0.1, 0.9, -0.4, 0.5, 0.0, -0.3, 0.4],
+            [0.0, -0.2, 0.4, 1.0, -0.5, 0.3, 0.2, -0.1],
+            [-0.3, 0.4, 0.0, -0.2, 0.9, -0.1, 0.5, 0.2],
+            [0.5, 0.0, -0.4, 0.2, 0.1, 0.8, -0.2, 0.3],
+        ],
+        intercepts=[0.0, 0.1, -0.05, 0.2, -0.1, 0.05],
+    ),
+    "simplex_sparse_max_affine_16d": _make_simplex_max_affine_objective(
+        "simplex_sparse_max_affine_16d",
+        gradients=[
+            [1.0 if j == i else (-0.2 if j == (i + 1) % 16 else 0.0) for j in range(16)]
+            for i in range(8)
+        ]
+        + [
+            [-0.5 if j == i else (0.7 if j == (i + 4) % 16 else 0.0) for j in range(16)]
+            for i in range(8)
+        ],
+        intercepts=[0.02 * i for i in range(16)],
     ),
 }
 

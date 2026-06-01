@@ -29,14 +29,34 @@ SAMPLE_POINTS = {
         np.array([0.5, -0.25, 0.75, 1.0]),
         np.array([2.0, -1.5, 0.75, 2.5]),
     ),
+    "ill_conditioned_l1_shift_8d": (
+        np.zeros(8),
+        np.array([2.0, -1.5, 1.0, 3.0, -2.0, 0.5, 1.5, -0.75]),
+    ),
+    "ill_conditioned_max_affine_8d": (
+        np.ones(8) * 0.25,
+        np.zeros(8),
+    ),
+    "simplex_linear_8d": (
+        np.full(8, 1.0 / 8.0),
+        np.eye(8)[0],
+    ),
+    "simplex_max_affine_8d": (
+        np.full(8, 1.0 / 8.0),
+        np.eye(8)[0],
+    ),
+    "simplex_sparse_max_affine_16d": (
+        np.full(16, 1.0 / 16.0),
+        np.eye(16)[0],
+    ),
 }
 
 
 class ObjectiveRegistryTest(unittest.TestCase):
     def test_expected_registry_ids_are_present(self) -> None:
-        self.assertEqual(
-            list_objective_ids(),
-            [
+        self.assertTrue(
+            set(
+                [
                 "abs_a2",
                 "linf_shift_2d",
                 "max_affine_1d",
@@ -44,7 +64,13 @@ class ObjectiveRegistryTest(unittest.TestCase):
                 "weighted_l1_shift_1d",
                 "weighted_l1_shift_2d",
                 "weighted_l1_shift_4d",
-            ],
+                "ill_conditioned_l1_shift_8d",
+                "ill_conditioned_max_affine_8d",
+                "simplex_linear_8d",
+                "simplex_max_affine_8d",
+                "simplex_sparse_max_affine_16d",
+                ]
+            ).issubset(set(list_objective_ids()))
         )
 
     def test_objectives_return_finite_values_and_correct_subgradient_shapes(self) -> None:

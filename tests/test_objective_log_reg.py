@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import csv
+import math
 from pathlib import Path
 import sys
 import tempfile
 import unittest
+import warnings
 
 import numpy as np
 
@@ -136,6 +138,27 @@ class LogisticRegressionObjectiveTest(unittest.TestCase):
 
             with self.assertRaisesRegex(ValueError, "Dataset must contain both label classes"):
                 build_logistic_regression_objective(dataset_path)
+
+    def test_large_weights_do_not_emit_logistic_runtime_warnings(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            dataset_path = Path(temp_dir) / "synthetic.csv"
+            self._write_dataset(dataset_path)
+            objective = build_logistic_regression_objective(dataset_path, seed=3)
+            weights = np.full(objective.dimension, 1e308, dtype=float)
+
+            with warnings.catch_warnings(record=True) as caught:
+                warnings.simplefilter("always", RuntimeWarning)
+                loss = objective.objective(weights)
+                accuracy = objective.test_accuracy(weights)
+                subgradient = objective.subgradient(weights)
+
+            self.assertTrue(math.isinf(loss))
+            self.assertGreaterEqual(accuracy, 0.0)
+            self.assertLessEqual(accuracy, 1.0)
+            self.assertTrue(np.all(np.isfinite(subgradient)))
+            self.assertFalse(
+                [warning for warning in caught if issubclass(warning.category, RuntimeWarning)]
+            )
 
     def _write_dataset(self, dataset_path: Path) -> None:
         rows = [

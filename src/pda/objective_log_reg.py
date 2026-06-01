@@ -58,6 +58,17 @@ def _sigmoid(values: FloatArray) -> FloatArray:
     return result
 
 
+def _linear_scores(X_data: FloatArray, weights: FloatArray) -> FloatArray:
+    """Compute logits while controlling NumPy/BLAS overflow warnings."""
+    with np.errstate(divide="ignore", invalid="ignore", over="ignore"):
+        return X_data @ weights
+
+
+def _finite_logits_for_prediction(logits: FloatArray) -> FloatArray:
+    """Map non-finite logits to saturated finite values for classification."""
+    return np.nan_to_num(logits, nan=0.0, posinf=500.0, neginf=-500.0)
+
+
 def _as_vector(value: ObjectiveValue, *, dimension: int) -> FloatArray:
     """Convert an input to a fixed-dimensional vector."""
     array = np.asarray(value, dtype=float)
@@ -343,7 +354,11 @@ def build_logistic_regression_objective(
 
     def empirical_loss(weights: ObjectiveValue, *, X_data: FloatArray, y_data: FloatArray) -> float:
         weights_array = _as_vector(weights, dimension=dimension)
-        logits = X_data @ weights_array
+        if not np.isfinite(weights_array).all():
+            return float("inf")
+        logits = _linear_scores(X_data, weights_array)
+        if not np.isfinite(logits).all():
+            return float("inf")
         loss = np.mean(np.logaddexp(0.0, logits) - y_data * logits)
         if not lasso:
             return float(loss)
@@ -355,7 +370,7 @@ def build_logistic_regression_objective(
 
     def subgradient(weights: ObjectiveValue) -> FloatArray:
         weights_array = _as_vector(weights, dimension=dimension)
-        logits = X_train @ weights_array
+        logits = _finite_logits_for_prediction(_linear_scores(X_train, weights_array))
         probabilities = _sigmoid(logits)
         gradient = (X_train.T @ (probabilities - y_train)) / train_sample_count
         if lasso:
@@ -366,7 +381,8 @@ def build_logistic_regression_objective(
 
     def test_accuracy(weights: ObjectiveValue) -> float:
         weights_array = _as_vector(weights, dimension=dimension)
-        probabilities = _sigmoid(X_test @ weights_array)
+        logits = _finite_logits_for_prediction(_linear_scores(X_test, weights_array))
+        probabilities = _sigmoid(logits)
         predictions = (probabilities >= 0.5).astype(float)
         return float(np.mean(predictions == y_test))
 

@@ -4,7 +4,7 @@ from .objective_log_reg import (
     build_logistic_regression_objective,
     load_binary_classification_dataset,
 )
-from .sda import SDA, SDAResult
+from .sda import SDA, SDAResult, WeightedDualAveraging
 from .subgradient import SubgradientMethod, SubgradientResult
 
 __all__ = [
@@ -14,6 +14,7 @@ __all__ = [
     "SDAResult",
     "SubgradientMethod",
     "SubgradientResult",
+    "WeightedDualAveraging",
     "build_logistic_regression_objective",
     "get_objective",
     "load_binary_classification_dataset",

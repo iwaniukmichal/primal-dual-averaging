@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 
 
-DEFAULT_OUTPUT = Path(__file__).resolve().with_name("synthetic_logistic.csv")
+DEFAULT_OUTPUT = Path(__file__).resolve().with_name("synthetic_logistic_generated.csv")
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -61,7 +61,13 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def sigmoid(values: np.ndarray) -> np.ndarray:
-    return 1.0 / (1.0 + np.exp(-values))
+    positive = values >= 0.0
+    negative = ~positive
+    result = np.empty_like(values, dtype=float)
+    result[positive] = 1.0 / (1.0 + np.exp(-values[positive]))
+    exp_values = np.exp(values[negative])
+    result[negative] = exp_values / (1.0 + exp_values)
+    return result
 
 
 def validate_args(args: argparse.Namespace, parser: argparse.ArgumentParser) -> None:
@@ -86,7 +92,10 @@ def generate_dataset(
 ) -> tuple[np.ndarray, np.ndarray]:
     rng = np.random.default_rng(seed)
     features = rng.standard_normal(size=(n_samples, dimension))
-    logits = features @ beta + intercept
+    with np.errstate(divide="ignore", invalid="ignore", over="ignore"):
+        logits = features @ beta + intercept
+    if not np.isfinite(logits).all():
+        raise FloatingPointError("Generated non-finite logistic logits.")
     probabilities = sigmoid(logits)
     labels = rng.binomial(1, probabilities).astype(int)
 

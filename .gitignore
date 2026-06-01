@@ -25,10 +25,11 @@ ENV/
 
 plan.*
 !plan.tex
-*Nesterov*
 
 .git
 .vscode
 .idea/
 *cache*
 tt.txt
+
+*.csv
