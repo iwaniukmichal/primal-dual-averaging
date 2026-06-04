@@ -1,9 +1,9 @@
 {
   "experiment": "prox_geometry_comparison",
-  "created_at": "2026-06-01T17:32:04.618547+00:00",
+  "created_at": "2026-06-02T08:41:25.200486+00:00",
   "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 11:23:37) [Clang 14.0.6 ]",
   "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
-  "git_commit": "795f89c433efd6fa123d4460ed658e02fd3a90c9",
+  "git_commit": "6a4b9a35a0e541d2bed0c83839a7d827e0bb5f8c",
   "configured_run_count": 432,
   "selected_run_count": 432,
   "completed_run_count": 432,

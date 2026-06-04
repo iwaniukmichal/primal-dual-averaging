@@ -273,6 +273,7 @@ class SDA:
         max_iter: int,
         restrict_to_fd: bool = False,
         dual_averaging: DualAveragingMode = "simple",
+        stop_on_gap: bool = True,
     ) -> SDAResult:
         """Run dual averaging and return the tracked trajectories.
 
@@ -288,6 +289,9 @@ class SDA:
             dual_averaging: `"simple"` uses `lambda_k = 1`; `"weighted"` uses
                 `lambda_k = 1 / ||g_k||_*`, as in Nesterov's weighted dual
                 averages method.
+            stop_on_gap: Whether to stop when the normalized gap reaches `eps`.
+                Stochastic runs can disable this because the per-run sampled gap is
+                noisy and is not the deterministic stopping certificate.
 
         Returns:
             A dictionary containing the SDA trajectories. The keys follow the
@@ -351,7 +355,7 @@ class SDA:
             gap.append(gap_accum[k + 1] + self._xi(D, -s[k + 1]))
 
             denominator = S[k + 1] if S[k + 1] > 0.0 else 1.0
-            if gap[k] / denominator <= eps:
+            if stop_on_gap and gap[k] / denominator <= eps:
                 total_runtime_seconds = perf_counter() - start_time
                 iterations = k + 1
                 return self._build_result(

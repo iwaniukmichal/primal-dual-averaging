@@ -1,12 +1,12 @@
 {
   "experiment": "nonsmooth_objective_grid",
-  "created_at": "2026-06-01T13:29:48.857508+00:00",
+  "created_at": "2026-06-02T08:41:10.097950+00:00",
   "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 11:23:37) [Clang 14.0.6 ]",
   "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
-  "git_commit": "795f89c433efd6fa123d4460ed658e02fd3a90c9",
-  "configured_run_count": 1080,
-  "selected_run_count": 1080,
-  "completed_run_count": 1080,
+  "git_commit": "6a4b9a35a0e541d2bed0c83839a7d827e0bb5f8c",
+  "configured_run_count": 1224,
+  "selected_run_count": 1224,
+  "completed_run_count": 1224,
   "skipped": [],
   "grid": [
     {
@@ -15,6 +15,17 @@
       "restrict_to_fd": false,
       "max_iter": 1000,
       "eps": 0.0001,
+      "gamma_mult": 0.1,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "abs_a2",
+      "D": 0.5,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
       "gamma_mult": 0.25,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
@@ -60,6 +71,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "abs_a2",
+      "D": 0.5,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -115,6 +137,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "abs_a2",
+      "D": 2.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -170,6 +203,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "abs_a2",
+      "D": 2.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -225,6 +269,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "abs_a2",
+      "D": 8.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -280,6 +335,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "abs_a2",
+      "D": 8.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -335,6 +401,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "abs_a2",
+      "D": 32.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -390,6 +467,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "abs_a2",
+      "D": 32.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -455,6 +543,17 @@
       "restrict_to_fd": false,
       "max_iter": 1000,
       "eps": 0.0001,
+      "gamma_mult": 0.1,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "ill_conditioned_l1_shift_8d",
+      "D": 0.5,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
       "gamma_mult": 0.25,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
@@ -500,6 +599,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "ill_conditioned_l1_shift_8d",
+      "D": 0.5,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -555,6 +665,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "ill_conditioned_l1_shift_8d",
+      "D": 2.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -610,6 +731,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "ill_conditioned_l1_shift_8d",
+      "D": 2.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -665,6 +797,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "ill_conditioned_l1_shift_8d",
+      "D": 8.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -720,6 +863,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "ill_conditioned_l1_shift_8d",
+      "D": 8.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -775,6 +929,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "ill_conditioned_l1_shift_8d",
+      "D": 32.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -830,6 +995,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "ill_conditioned_l1_shift_8d",
+      "D": 32.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -895,6 +1071,17 @@
       "restrict_to_fd": false,
       "max_iter": 1000,
       "eps": 0.0001,
+      "gamma_mult": 0.1,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "ill_conditioned_max_affine_8d",
+      "D": 0.5,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
       "gamma_mult": 0.25,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
@@ -940,6 +1127,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "ill_conditioned_max_affine_8d",
+      "D": 0.5,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -995,6 +1193,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "ill_conditioned_max_affine_8d",
+      "D": 2.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -1050,6 +1259,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "ill_conditioned_max_affine_8d",
+      "D": 2.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -1105,6 +1325,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "ill_conditioned_max_affine_8d",
+      "D": 8.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -1160,6 +1391,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "ill_conditioned_max_affine_8d",
+      "D": 8.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -1215,6 +1457,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "ill_conditioned_max_affine_8d",
+      "D": 32.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -1270,6 +1523,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "ill_conditioned_max_affine_8d",
+      "D": 32.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -1335,6 +1599,17 @@
       "restrict_to_fd": false,
       "max_iter": 1000,
       "eps": 0.0001,
+      "gamma_mult": 0.1,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "linf_shift_2d",
+      "D": 0.5,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
       "gamma_mult": 0.25,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
@@ -1390,7 +1665,7 @@
       "restrict_to_fd": true,
       "max_iter": 1000,
       "eps": 0.0001,
-      "gamma_mult": 0.25,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -1401,7 +1676,7 @@
       "restrict_to_fd": true,
       "max_iter": 1000,
       "eps": 0.0001,
-      "gamma_mult": 0.5,
+      "gamma_mult": 0.25,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -1412,7 +1687,7 @@
       "restrict_to_fd": true,
       "max_iter": 1000,
       "eps": 0.0001,
-      "gamma_mult": 1.0,
+      "gamma_mult": 0.5,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -1423,7 +1698,7 @@
       "restrict_to_fd": true,
       "max_iter": 1000,
       "eps": 0.0001,
-      "gamma_mult": 2.0,
+      "gamma_mult": 1.0,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -1434,7 +1709,29 @@
       "restrict_to_fd": true,
       "max_iter": 1000,
       "eps": 0.0001,
+      "gamma_mult": 2.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "linf_shift_2d",
+      "D": 0.5,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "linf_shift_2d",
+      "D": 2.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -1490,6 +1787,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "linf_shift_2d",
+      "D": 2.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -1545,6 +1853,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "linf_shift_2d",
+      "D": 8.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -1610,6 +1929,17 @@
       "restrict_to_fd": true,
       "max_iter": 1000,
       "eps": 0.0001,
+      "gamma_mult": 0.1,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "linf_shift_2d",
+      "D": 8.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
       "gamma_mult": 0.25,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
@@ -1655,6 +1985,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "linf_shift_2d",
+      "D": 32.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -1710,6 +2051,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "linf_shift_2d",
+      "D": 32.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -1765,6 +2117,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "max_affine_1d",
+      "D": 0.5,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -1820,6 +2183,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "max_affine_1d",
+      "D": 0.5,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -1875,6 +2249,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "max_affine_1d",
+      "D": 2.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -1930,6 +2315,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "max_affine_1d",
+      "D": 2.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -1985,6 +2381,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "max_affine_1d",
+      "D": 8.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -2040,6 +2447,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "max_affine_1d",
+      "D": 8.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -2095,6 +2513,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "max_affine_1d",
+      "D": 32.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -2150,6 +2579,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "max_affine_1d",
+      "D": 32.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -2215,6 +2655,17 @@
       "restrict_to_fd": false,
       "max_iter": 1000,
       "eps": 0.0001,
+      "gamma_mult": 0.1,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "max_affine_4d",
+      "D": 0.5,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
       "gamma_mult": 0.25,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
@@ -2260,6 +2711,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "max_affine_4d",
+      "D": 0.5,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -2315,6 +2777,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "max_affine_4d",
+      "D": 2.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -2370,6 +2843,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "max_affine_4d",
+      "D": 2.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -2425,6 +2909,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "max_affine_4d",
+      "D": 8.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -2480,6 +2975,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "max_affine_4d",
+      "D": 8.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -2535,6 +3041,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "max_affine_4d",
+      "D": 32.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -2600,6 +3117,17 @@
       "restrict_to_fd": true,
       "max_iter": 1000,
       "eps": 0.0001,
+      "gamma_mult": 0.1,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "max_affine_4d",
+      "D": 32.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
       "gamma_mult": 0.25,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
@@ -2645,6 +3173,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_1d",
+      "D": 0.5,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -2700,6 +3239,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_1d",
+      "D": 0.5,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -2755,6 +3305,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_1d",
+      "D": 2.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -2810,6 +3371,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_1d",
+      "D": 2.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -2865,6 +3437,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_1d",
+      "D": 8.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -2920,6 +3503,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_1d",
+      "D": 8.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -2975,6 +3569,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_1d",
+      "D": 32.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -3030,6 +3635,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_1d",
+      "D": 32.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -3085,6 +3701,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_2d",
+      "D": 0.5,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -3140,6 +3767,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_2d",
+      "D": 0.5,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -3205,6 +3843,17 @@
       "restrict_to_fd": false,
       "max_iter": 1000,
       "eps": 0.0001,
+      "gamma_mult": 0.1,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_2d",
+      "D": 2.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
       "gamma_mult": 0.25,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
@@ -3250,6 +3899,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_2d",
+      "D": 2.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -3305,6 +3965,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_2d",
+      "D": 8.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -3360,6 +4031,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_2d",
+      "D": 8.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -3415,6 +4097,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_2d",
+      "D": 32.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -3470,6 +4163,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_2d",
+      "D": 32.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -3525,6 +4229,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_4d",
+      "D": 0.5,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -3580,6 +4295,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_4d",
+      "D": 0.5,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -3635,6 +4361,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_4d",
+      "D": 2.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -3690,6 +4427,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_4d",
+      "D": 2.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -3723,6 +4471,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 1.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_4d",
+      "D": 2.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 2.0,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -3733,18 +4492,18 @@
       "restrict_to_fd": true,
       "max_iter": 1000,
       "eps": 0.0001,
-      "gamma_mult": 2.0,
+      "gamma_mult": 4.0,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
     },
     {
       "objective_id": "weighted_l1_shift_4d",
-      "D": 2.0,
-      "restrict_to_fd": true,
+      "D": 8.0,
+      "restrict_to_fd": false,
       "max_iter": 1000,
       "eps": 0.0001,
-      "gamma_mult": 4.0,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -3800,6 +4559,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_4d",
+      "D": 8.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -3855,6 +4625,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_4d",
+      "D": 32.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -3910,6 +4691,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_simple_euclidean",
+      "prox_fun": "euclidean",
+      "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "weighted_l1_shift_4d",
+      "D": 32.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
@@ -3968,6 +4760,17 @@
       "method": "sda_simple_euclidean",
       "prox_fun": "euclidean",
       "dual_averaging": "simple"
+    },
+    {
+      "objective_id": "abs_a2",
+      "D": 0.5,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
     },
     {
       "objective_id": "abs_a2",
@@ -4020,6 +4823,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "abs_a2",
+      "D": 0.5,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -4075,6 +4889,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "abs_a2",
+      "D": 2.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -4130,6 +4955,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "abs_a2",
+      "D": 2.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -4185,6 +5021,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "abs_a2",
+      "D": 8.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -4240,6 +5087,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "abs_a2",
+      "D": 8.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -4295,6 +5153,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "abs_a2",
+      "D": 32.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -4350,6 +5219,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "abs_a2",
+      "D": 32.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -4405,6 +5285,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "ill_conditioned_l1_shift_8d",
+      "D": 0.5,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -4460,6 +5351,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "ill_conditioned_l1_shift_8d",
+      "D": 0.5,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -4515,6 +5417,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "ill_conditioned_l1_shift_8d",
+      "D": 2.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -4570,6 +5483,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "ill_conditioned_l1_shift_8d",
+      "D": 2.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -4625,6 +5549,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "ill_conditioned_l1_shift_8d",
+      "D": 8.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -4680,6 +5615,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "ill_conditioned_l1_shift_8d",
+      "D": 8.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -4735,6 +5681,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "ill_conditioned_l1_shift_8d",
+      "D": 32.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -4790,6 +5747,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "ill_conditioned_l1_shift_8d",
+      "D": 32.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -4845,6 +5813,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "ill_conditioned_max_affine_8d",
+      "D": 0.5,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -4900,6 +5879,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "ill_conditioned_max_affine_8d",
+      "D": 0.5,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -4955,6 +5945,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "ill_conditioned_max_affine_8d",
+      "D": 2.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -5010,6 +6011,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "ill_conditioned_max_affine_8d",
+      "D": 2.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -5065,6 +6077,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "ill_conditioned_max_affine_8d",
+      "D": 8.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -5098,6 +6121,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 1.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "ill_conditioned_max_affine_8d",
+      "D": 8.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 2.0,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -5108,7 +6142,7 @@
       "restrict_to_fd": false,
       "max_iter": 1000,
       "eps": 0.0001,
-      "gamma_mult": 2.0,
+      "gamma_mult": 4.0,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -5116,10 +6150,10 @@
     {
       "objective_id": "ill_conditioned_max_affine_8d",
       "D": 8.0,
-      "restrict_to_fd": false,
+      "restrict_to_fd": true,
       "max_iter": 1000,
       "eps": 0.0001,
-      "gamma_mult": 4.0,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -5175,6 +6209,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "ill_conditioned_max_affine_8d",
+      "D": 32.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -5240,6 +6285,17 @@
       "restrict_to_fd": true,
       "max_iter": 1000,
       "eps": 0.0001,
+      "gamma_mult": 0.1,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "ill_conditioned_max_affine_8d",
+      "D": 32.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
       "gamma_mult": 0.25,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
@@ -5285,6 +6341,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "linf_shift_2d",
+      "D": 0.5,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -5340,6 +6407,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "linf_shift_2d",
+      "D": 0.5,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -5395,6 +6473,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "linf_shift_2d",
+      "D": 2.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -5450,6 +6539,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "linf_shift_2d",
+      "D": 2.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -5505,6 +6605,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "linf_shift_2d",
+      "D": 8.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -5560,6 +6671,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "linf_shift_2d",
+      "D": 8.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -5615,6 +6737,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "linf_shift_2d",
+      "D": 32.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -5680,6 +6813,17 @@
       "restrict_to_fd": true,
       "max_iter": 1000,
       "eps": 0.0001,
+      "gamma_mult": 0.1,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "linf_shift_2d",
+      "D": 32.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
       "gamma_mult": 0.25,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
@@ -5725,6 +6869,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "max_affine_1d",
+      "D": 0.5,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -5780,6 +6935,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "max_affine_1d",
+      "D": 0.5,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -5835,6 +7001,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "max_affine_1d",
+      "D": 2.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -5890,6 +7067,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "max_affine_1d",
+      "D": 2.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -5945,6 +7133,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "max_affine_1d",
+      "D": 8.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -6000,6 +7199,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "max_affine_1d",
+      "D": 8.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -6055,6 +7265,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "max_affine_1d",
+      "D": 32.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -6120,6 +7341,17 @@
       "restrict_to_fd": true,
       "max_iter": 1000,
       "eps": 0.0001,
+      "gamma_mult": 0.1,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "max_affine_1d",
+      "D": 32.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
       "gamma_mult": 0.25,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
@@ -6165,6 +7397,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "max_affine_4d",
+      "D": 0.5,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -6220,6 +7463,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "max_affine_4d",
+      "D": 0.5,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -6275,6 +7529,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "max_affine_4d",
+      "D": 2.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -6330,6 +7595,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "max_affine_4d",
+      "D": 2.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -6385,6 +7661,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "max_affine_4d",
+      "D": 8.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -6440,6 +7727,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "max_affine_4d",
+      "D": 8.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -6473,6 +7771,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 1.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "max_affine_4d",
+      "D": 8.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 2.0,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -6483,18 +7792,18 @@
       "restrict_to_fd": true,
       "max_iter": 1000,
       "eps": 0.0001,
-      "gamma_mult": 2.0,
+      "gamma_mult": 4.0,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
     },
     {
       "objective_id": "max_affine_4d",
-      "D": 8.0,
-      "restrict_to_fd": true,
+      "D": 32.0,
+      "restrict_to_fd": false,
       "max_iter": 1000,
       "eps": 0.0001,
-      "gamma_mult": 4.0,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -6550,6 +7859,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "max_affine_4d",
+      "D": 32.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -6605,6 +7925,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_1d",
+      "D": 0.5,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -6660,6 +7991,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_1d",
+      "D": 0.5,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -6715,6 +8057,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_1d",
+      "D": 2.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -6770,6 +8123,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_1d",
+      "D": 2.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -6825,6 +8189,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_1d",
+      "D": 8.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -6880,6 +8255,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_1d",
+      "D": 8.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -6935,6 +8321,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_1d",
+      "D": 32.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -6990,6 +8387,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_1d",
+      "D": 32.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -7045,6 +8453,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_2d",
+      "D": 0.5,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -7100,6 +8519,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_2d",
+      "D": 0.5,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -7155,6 +8585,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_2d",
+      "D": 2.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -7210,6 +8651,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_2d",
+      "D": 2.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -7265,6 +8717,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_2d",
+      "D": 8.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -7320,6 +8783,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_2d",
+      "D": 8.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -7375,6 +8849,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_2d",
+      "D": 32.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -7430,6 +8915,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_2d",
+      "D": 32.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -7485,6 +8981,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_4d",
+      "D": 0.5,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -7540,6 +9047,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_4d",
+      "D": 0.5,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -7595,6 +9113,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_4d",
+      "D": 2.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -7650,6 +9179,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_4d",
+      "D": 2.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -7705,6 +9245,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_4d",
+      "D": 8.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -7760,6 +9311,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_4d",
+      "D": 8.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -7815,6 +9377,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_4d",
+      "D": 32.0,
+      "restrict_to_fd": false,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"
@@ -7870,6 +9443,17 @@
       "max_iter": 1000,
       "eps": 0.0001,
       "gamma_mult": 4.0,
+      "method": "sda_weighted_euclidean_dual_average",
+      "prox_fun": "euclidean",
+      "dual_averaging": "weighted"
+    },
+    {
+      "objective_id": "weighted_l1_shift_4d",
+      "D": 32.0,
+      "restrict_to_fd": true,
+      "max_iter": 1000,
+      "eps": 0.0001,
+      "gamma_mult": 0.1,
       "method": "sda_weighted_euclidean_dual_average",
       "prox_fun": "euclidean",
       "dual_averaging": "weighted"

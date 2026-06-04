@@ -14,6 +14,10 @@ These files were generated with `data/generate_logistic_data.py`:
   flips, useful for robustness checks.
 - `synthetic_logistic_imbalanced_10d.csv`: shifted intercept and mild noise,
   useful for class-imbalance behavior.
+- `synthetic_logistic_big_sparse_50d.csv`: larger 50-dimensional sparse dataset
+  for weighted SDA versus SSA runtime comparisons.
+- `synthetic_logistic_big_noisy_80d.csv`: larger 80-dimensional sparse dataset
+  with label noise for weighted SDA versus SSA runtime comparisons.
 
 Regenerate them from the repository root:
 
@@ -22,6 +26,8 @@ python data/generate_logistic_data.py --n-samples 240 --dimension 5 --beta 2.0 -
 python data/generate_logistic_data.py --n-samples 1000 --dimension 20 --beta 2.5 -2.0 1.5 -1.0 0.75 0.5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 --intercept 0.0 --seed 20 --flip-prob 0.0 --output data/synthetic_logistic_sparse_20d.csv
 python data/generate_logistic_data.py --n-samples 1000 --dimension 20 --beta 2.5 -2.0 1.5 -1.0 0.75 0.5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 --intercept 0.0 --seed 21 --flip-prob 0.1 --output data/synthetic_logistic_noisy_20d.csv
 python data/generate_logistic_data.py --n-samples 800 --dimension 10 --beta 1.5 -1.25 1.0 -0.75 0.5 0.25 0 0 0 0 --intercept -1.2 --seed 30 --flip-prob 0.03 --output data/synthetic_logistic_imbalanced_10d.csv
+python data/generate_logistic_data.py --n-samples 12000 --dimension 50 --beta 3.0 -2.5 2.0 -1.5 1.2 -1.0 0.8 -0.6 0.4 -0.3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 --intercept 0.0 --seed 50 --flip-prob 0.0 --output data/synthetic_logistic_big_sparse_50d.csv
+python data/generate_logistic_data.py --n-samples 20000 --dimension 80 --beta 2.5 -2.2 1.8 -1.5 1.2 -1.0 0.8 -0.6 0.5 -0.4 0.3 -0.2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 --intercept -0.4 --seed 80 --flip-prob 0.15 --output data/synthetic_logistic_big_noisy_80d.csv
 ```
 
 ## Downloaded Public Datasets

@@ -22,13 +22,13 @@ DATASETS = [
 def build_configs() -> list[dict[str, object]]:
     common = {
         "dataset": DATASETS,
-        "lambda": [0.01, 0.1, 1.0, 10.0],
-        "restrict_to_fd": [True],
-        "seed": [0, 1, 2],
+        "lambda": [1.0],
+        "restrict_to_fd": [False],
+        "seed": [0],
         "test_size": [0.2],
         "D": [8.0, 32.0, 128.0],
         "max_iter": [1000],
-        "eps": [1e-2],
+        "eps": [1e-3],
         "lasso": [True],
     }
     configs: list[dict[str, object]] = []
@@ -48,8 +48,8 @@ def build_configs() -> list[dict[str, object]]:
     for config in parameter_grid(
         {
             "dataset": DATASETS,
-            "lambda": [0.01, 0.1, 1.0, 10.0],
-            "seed": [0, 1, 2],
+            "lambda": [1.0],
+            "seed": [0],
             "test_size": [0.2],
             "max_iter": [1000],
             "lasso": [True],

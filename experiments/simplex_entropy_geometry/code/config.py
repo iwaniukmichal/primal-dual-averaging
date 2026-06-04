@@ -15,16 +15,15 @@ def build_configs() -> list[dict[str, object]]:
                   "simplex_sparse_max_affine_16d"]
     configs: list[dict[str, object]] = []
     for objective_id in objectives:
-        dimension = get_objective(objective_id).dimension
         for config in parameter_grid(
             {
                 "objective_id": [objective_id],
-                "D": [0.05, 0.25, 0.75, float(math.log(dimension))],
-                "gamma_mult": [0.1, 0.25, 0.5, 1.0, 2.0, 4.0],
+                "D": [1, 2, 3],
+                "gamma_mult": [0.1, 0.5, 1.0, 4.0],
                 "dual_averaging": ["simple", "weighted"],
-                "restrict_to_fd": [False, True],
-                "max_iter": [1500],
-                "eps": [1e-4],
+                "restrict_to_fd": [False],
+                "max_iter": [1000],
+                "eps": [1e-3],
             }
         ):
             configs.append(

@@ -454,22 +454,27 @@ def _make_boxed_max_affine_from_scales(
     objective_id: str,
     *,
     scales: Sequence[float],
+    shifts: Sequence[float],
 ) -> ObjectiveDefinition:
     scales_array = _to_float_array(scales)
+    shifts_array = _to_float_array(shifts)
+    if len(scales_array) != len(shifts_array):
+        raise ValueError("scales and shifts must have the same length.")
     dimension = len(scales_array)
-    minimizer = np.zeros(dimension, dtype=float)
+    minimizer = shifts_array.copy()
 
     def objective(x: ObjectiveValue) -> float:
         x_value = _as_vector(x, dimension=dimension)
-        return float(np.max(scales_array * np.abs(x_value)))
+        return float(np.max(scales_array * np.abs(x_value - shifts_array)))
 
     def subgradient(x: ObjectiveValue) -> FloatArray:
         x_value = _as_vector(x, dimension=dimension)
-        values = scales_array * np.abs(x_value)
+        diffs = x_value - shifts_array
+        values = scales_array * np.abs(diffs)
         active_index = int(np.argmax(values))
         gradient = np.zeros(dimension, dtype=float)
         gradient[active_index] = scales_array[active_index] * _sign_with_zero(
-            float(x_value[active_index])
+            float(diffs[active_index])
         )
         return gradient
 
@@ -477,7 +482,7 @@ def _make_boxed_max_affine_from_scales(
         id=objective_id,
         family="ill_conditioned_max_affine",
         name=f"{dimension}D ill-conditioned max-affine objective",
-        params={"scales": _json_list(scales_array)},
+        params={"scales": _json_list(scales_array), "shifts": _json_list(shifts_array)},
         dimension=dimension,
         lipschitz_constant=float(np.max(scales_array)),
         minimum_value=0.0,
@@ -532,6 +537,7 @@ OBJECTIVE_REGISTRY: Dict[str, ObjectiveDefinition] = {
     "ill_conditioned_max_affine_8d": _make_boxed_max_affine_from_scales(
         "ill_conditioned_max_affine_8d",
         scales=[0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0, 25.0],
+        shifts=[2.0, -1.5, 1.0, 3.0, -2.0, 0.5, 1.5, -0.75],
     ),
     "simplex_linear_8d": _make_simplex_linear_objective(
         "simplex_linear_8d",

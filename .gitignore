@@ -33,3 +33,5 @@ plan.*
 tt.txt
 
 *.csv
+.agents
+*.html

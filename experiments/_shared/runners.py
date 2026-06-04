@@ -88,6 +88,8 @@ def run_logistic_method(config: dict[str, Any], experiment: str) -> tuple[dict[s
 
     if method.startswith("sda_"):
         return _run_logistic_sda(objective, config, experiment, run_id, dataset)
+    if method == "ssa_euclidean":
+        return _run_logistic_ssa(objective, config, experiment, run_id, dataset)
     if method == "projected_subgradient":
         return _run_logistic_subgradient(objective, config, experiment, run_id, dataset)
     if method == "sklearn_saga":
@@ -387,6 +389,86 @@ def _run_logistic_sda(
         dual_averaging=str(config.get("dual_averaging", "simple")),
     )
     return _summarize_logistic_result(experiment, run_id, config, objective, result, gamma, dataset)
+
+
+def _run_logistic_ssa(
+    objective: Any,
+    config: dict[str, Any],
+    experiment: str,
+    run_id: str,
+    dataset: Path,
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    lasso_lambda = float(config.get("lambda", 1.0)) if bool(config.get("lasso", False)) else 0.0
+    sample_lipschitz = float(np.max(np.linalg.norm(objective.X_train, axis=1)))
+    if lasso_lambda > 0.0:
+        train_sample_count = int(objective.X_train.shape[0])
+        sample_lipschitz += float((lasso_lambda / train_sample_count) * np.sqrt(objective.dimension))
+    gamma = float(config.get("gamma_mult", 1.0)) * gamma_star(
+        float(config["D"]),
+        sample_lipschitz,
+    )
+    rng = np.random.default_rng(int(config.get("sample_seed", config.get("seed", 0))))
+    subgradient_oracle = _logistic_stochastic_subgradient_oracle(
+        objective,
+        lasso_lambda=lasso_lambda,
+        batch_size=int(config.get("batch_size", 1)),
+        rng=rng,
+    )
+    prox_center = prox_center_for_objective(int(objective.dimension), "euclidean")
+    result = SDA(prox_center=prox_center).run(
+        gamma=gamma,
+        D=float(config["D"]),
+        eps=float(config.get("eps", 1e-4)),
+        subgradient_oracle=subgradient_oracle,
+        max_iter=int(config.get("max_iter", 1000)),
+        restrict_to_fd=bool(config.get("restrict_to_fd", False)),
+        dual_averaging="simple",
+        stop_on_gap=False,
+    )
+    result["dual_averaging"] = "stochastic_simple"
+    return _summarize_logistic_result(experiment, run_id, config, objective, result, gamma, dataset)
+
+
+def _logistic_stochastic_subgradient_oracle(
+    objective: Any,
+    *,
+    lasso_lambda: float,
+    batch_size: int,
+    rng: np.random.Generator,
+) -> Any:
+    if batch_size <= 0:
+        raise ValueError("batch_size must be positive for SSA.")
+
+    X_train = np.asarray(objective.X_train, dtype=float)
+    y_train = np.asarray(objective.y_train, dtype=float)
+    train_sample_count = int(X_train.shape[0])
+    dimension = int(objective.dimension)
+
+    def oracle(weights: Any) -> np.ndarray:
+        weights_array = np.asarray(weights, dtype=float)
+        if weights_array.shape != (dimension,):
+            raise ValueError(
+                f"Expected a vector of shape {(dimension,)}, got {weights_array.shape}."
+            )
+        indices = rng.integers(0, train_sample_count, size=batch_size)
+        X_batch = X_train[indices]
+        y_batch = y_train[indices]
+        logits = np.nan_to_num(X_batch @ weights_array, nan=0.0, posinf=500.0, neginf=-500.0)
+        positive = logits >= 0.0
+        probabilities = np.empty_like(logits, dtype=float)
+        probabilities[positive] = 1.0 / (1.0 + np.exp(-logits[positive]))
+        exp_values = np.exp(logits[~positive])
+        probabilities[~positive] = exp_values / (1.0 + exp_values)
+        gradient = (X_batch.T @ (probabilities - y_batch)) / batch_size
+        if lasso_lambda > 0.0:
+            penalty_gradient = np.zeros_like(weights_array)
+            penalty_signs = np.sign(weights_array[:-1])
+            penalty_signs[np.isclose(weights_array[:-1], 0.0)] = 0.0
+            penalty_gradient[:-1] = penalty_signs
+            gradient = gradient + (lasso_lambda / train_sample_count) * penalty_gradient
+        return gradient
+
+    return oracle
 
 
 def _run_logistic_subgradient(

@@ -35,7 +35,7 @@ SAMPLE_POINTS = {
     ),
     "ill_conditioned_max_affine_8d": (
         np.ones(8) * 0.25,
-        np.zeros(8),
+        np.array([2.0, -1.5, 1.0, 3.0, -2.0, 0.5, 1.5, -0.75]),
     ),
     "simplex_linear_8d": (
         np.full(8, 1.0 / 8.0),
