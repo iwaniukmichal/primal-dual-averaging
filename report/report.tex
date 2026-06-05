@@ -86,7 +86,7 @@ If the selected radius satisfies the required condition
     D\ge d(x^\star),
 \]
 then \(x^\star\in F_D\) and the normalized primal--dual certificate gap
-\(\delta_k(D)/S_k\) bounds the objective error of the averaged iterate
+\(\delta_k(D)/S_k\) is an upper bound on the objective error of the averaged iterate
 \(\hat x_k\).  This
 radius condition is essential: when \(x^\star\notin F_D\), the certificate is no
 longer a valid certificate for the original problem and can even become
@@ -583,19 +583,49 @@ and the plotted train-objective gap is
 \[
     F(\hat x_k)-F(x_{\mathrm{saga}}).
 \]
-Small negative lasso train-objective gaps should therefore be read as numerical
-ties with the SAGA reference, not as proof that the global optimum has been
-beaten.  SDA also computes a separate primal--dual certificate gap
+Small negative lasso train-objective gaps mean that the reported custom iterate
+has a lower value of the same train objective than the matched finite-iteration
+SAGA run.  They should not be interpreted as proof that the global optimum has
+been reached, because the SAGA value is a numerical reference rather than an
+exact optimum.  SDA also computes a separate primal--dual certificate gap
 \(\delta_k(D)/S_k\), which is used for stopping.  This primal--dual certificate
 gap is not the same quantity as the objective gaps reported in the tables and
-runtime plots.
+runtime plots.  When \(D\) is valid, Nesterov's analysis gives
+\[
+    f(\hat x_k)-f_D^\star \le \frac{\delta_k(D)}{S_k},
+    \qquad
+    f_D^\star=\min_{x\in F_D} f(x).
+\]
+If \(D\ge d(x^\star)\), then \(f_D^\star=f^\star\), so the certificate is an
+upper bound on the true objective gap.  The converse is not true: a small
+objective gap does not imply a small certificate gap.  The certificate is based
+on the averaged affine lower model accumulated from all past subgradients, so it
+measures a primal--dual model gap rather than only the objective value at
+\(\hat x_k\).  This averaged model can remain loose even when the averaged
+primal point is already close to optimal, making the certificate-based stopping
+rule harder to satisfy than a direct objective-gap target.  The report focuses
+on objective gaps because they measure the actual optimization error when a
+reference optimum is available and because they are comparable across SDA,
+projected subgradient, and SAGA.  The certificate gap remains important as an
+SDA stopping rule, but it is method-specific, can be conservative, and can be
+misleading when the radius condition fails.  For this reason the experiments use
+a fixed \(1000\)-iteration budget when comparing methods and treat
+certificate-based early stopping as an additional SDA diagnostic rather than as
+the only measure of progress.
 
 The experimental design follows the distinction made in Nesterov's
 primal--dual subgradient framework: the method maintains averaged primal
 iterates and a dual aggregate, and the weighted variant changes the scale used
-to aggregate subgradients \cite{nesterov_primal_dual}.  The stochastic lasso
-comparison is related to the regularized stochastic dual averaging literature,
-where averaging sampled gradients is natural for finite-sum learning objectives
+to aggregate subgradients \cite{nesterov_primal_dual}.  The conclusions below
+should therefore be read against the same theoretical background: the
+guarantees are worst-case \(O(1/\sqrt{k})\) subgradient guarantees that depend
+on a valid prox radius and uniformly bounded subgradients, not predictions that
+one variant dominates every finite benchmark.  The geometry experiments are
+also consistent with the mirror-descent view that the prox should encode useful
+problem geometry rather than an arbitrary norm change
+\cite{beck_teboulle_mirror}.  The stochastic lasso comparison is related to the
+regularized stochastic dual averaging literature, where averaging sampled
+gradients is natural for finite-sum learning objectives
 \cite{xiao_regularized_dual_averaging}.  The SAGA solver is used only as an
 empirical reference for lasso logistic regression because SAGA is designed for
 finite-sum composite objectives with nonsmooth regularizers
@@ -685,12 +715,21 @@ problem.  It can certify, at best, behavior relative to the restricted problem
 \[
     \min_{x\in F_D} f(x).
 \]
+When the iterates are not themselves restricted to \(F_D\), even this
+restricted-problem interpretation must be read carefully: \(\hat x_k\) may lie
+outside \(F_D\), so the value is not a feasible restricted-solution certificate.
 In this regime a negative computed primal--dual certificate gap is not paradoxical: the
 nonnegativity and upper-bound interpretation of \(\delta_k(D)\) rely on the
 same radius condition.  Therefore a negative value
 \(\delta_k(D)/S_k<\varepsilon\) may trigger early stopping even while the true
 objective gap \(f(\hat x_k)-f(x^\star)\) is still large.  This is the main
-phenomenon illustrated by Figure~\ref{fig:nonsmooth-unrestricted}.
+phenomenon illustrated by Figure~\ref{fig:nonsmooth-unrestricted}.  In the
+stored nonsmooth-grid results, \(93\) of the \(864\) SDA runs ended with a
+negative final certificate gap while still having true objective gap larger than
+\(10^{-3}\).  All \(93\) cases were unrestricted runs with \(D\in\{0.5,2\}\).
+This supports the mathematical interpretation: the failure is associated with
+using the certificate outside its radius assumption, not with the objective-gap
+metric itself.
 
 \begin{figure}[htbp]
 \centering
@@ -742,13 +781,16 @@ Figure~\ref{fig:nonsmooth-gamma-sweep} fixes \(D=8\) and compares several
 step, so \(\gamma_{\mathrm{mult}}=1\) corresponds to the proposed theoretical
 scale used by the code.  The parameter \(\gamma\) controls how strongly the
 accumulated dual subgradient model affects the next prox-center minimization:
-larger values produce more aggressive movement in response to the observed
-subgradients, while smaller values produce more conservative movement.  The
-figure shows that the baseline multiplier is not always the best empirical
-choice in terms of objective-gap decrease.  This is mathematically reasonable:
-the theoretical step is based on worst-case bounds, while the benchmark
-objectives have different local geometry, subgradient magnitudes, and distances
-from the initial point to the minimizer.
+larger values increase the prox regularization and therefore produce smaller
+primal moves in response to the observed subgradients, while smaller values
+weaken the regularization and produce larger moves.  The figure shows that the
+baseline multiplier is not always the best empirical choice in terms of
+objective-gap decrease.  This is mathematically reasonable: the theoretical step
+is based on worst-case bounds, while the benchmark objectives have different
+local geometry, subgradient magnitudes, and distances from the initial point to
+the minimizer.  The method conclusion is that \(\gamma_{\mathrm{mult}}\) should
+be treated as a tuning parameter around the theoretically balanced scale, not as
+a universally optimal constant.
 
 \begin{figure}[htbp]
 \centering
@@ -763,7 +805,8 @@ primal--dual certificate gap and changes the scale of the theoretical step throu
 diameter/radius bound.  The step size determines how quickly the dual aggregate
 is translated into primal movement.  If \(D\) is too small, the primal--dual certificate gap may
 not apply to the original problem.  If \(D\) is very large, the corresponding
-step scale can become too aggressive unless the multiplier is adjusted.  Thus a
+baseline scale can become too weak because \(\gamma^\star=L/\sqrt{2D}\)
+decreases with \(D\), unless the multiplier is adjusted.  Thus a
 multiplier that is effective for one radius may be poor for another radius.  In
 practice, \(D\) should be chosen from prior knowledge or a conservative bound on
 the solution radius, and \(\gamma_{\mathrm{mult}}\) should be tuned relative to
@@ -787,14 +830,20 @@ while the best single run is achieved by weighted SDA.  This should not be
 interpreted as a contradiction of SDA theory.  The methods solve slightly
 different algorithmic subproblems, the grid includes invalid small-radius SDA
 runs, and the theoretical guarantees are worst-case bounds rather than
-predictions of dominance on every small benchmark.
+predictions of dominance on every small benchmark.  The method-level conclusion
+from Figure~\ref{fig:nonsmooth-methods} is therefore comparative rather than
+absolute: projected subgradient is a strong baseline on these low-dimensional
+benchmarks, while weighted SDA can be best after tuning on some individual
+objectives.
 
 The runtime plot also clarifies why final objective gaps must be read together with the
 radius condition.  Some SDA points with very small runtime and large true
 objective gap correspond to runs that stopped early because \(D\) was too small
 and the computed primal--dual certificate gap became invalid or negative.  These are not
 successful fast convergences.  They are examples of the fake convergence
-mechanism shown in Figure~\ref{fig:nonsmooth-unrestricted}.
+mechanism shown in Figure~\ref{fig:nonsmooth-unrestricted}.  Consequently,
+Figure~\ref{fig:nonsmooth-runtime} should be read as a runtime--accuracy plot
+with certificate validity checked separately.
 
 \begin{figure}[htbp]
 \centering
@@ -851,7 +900,13 @@ whose anisotropy agrees with that profile, but the inverse profile is a useful
 negative control: it emphasizes the wrong coordinates and may slow convergence.
 This is consistent with mirror-descent intuition.  A prox function improves a
 method only when it represents the geometry of the feasible set and the
-subgradients well; an arbitrary change of norm is not a free acceleration.
+subgradients well; an arbitrary change of norm is not a free acceleration.  The
+selected \(D=32\), \(\gamma_{\mathrm{mult}}=1\), unrestricted runs show this
+directly: the coordinate-scaled simple weighted prox improves the
+ill-conditioned \(\ell_1\) shifted objective relative to the uniform Euclidean
+prox, but the inverse-scaled profile is much worse on the same objective.  The
+method conclusion is that weighted geometry should be justified by coordinate
+scale information, not added automatically.
 
 \begin{figure}[htbp]
 \centering
@@ -865,7 +920,10 @@ conclusion.  Weighted geometry introduces a small additional computational cost
 in these low-dimensional tests, and its optimization benefit depends on the
 objective.  The median objective gaps in Table~\ref{tab:prox-summary} are therefore best
 read together with the per-objective panels rather than as an absolute ranking
-of all geometries.
+of all geometries.  Thus Figure~\ref{fig:prox-runtime} does not support a
+runtime-only preference for the weighted prox in this implementation; its value
+is conditional on reducing enough iterations or objective gap to offset the
+extra per-iteration work.
 
 \begin{figure}[htbp]
 \centering
@@ -912,6 +970,9 @@ variants are close in median final objective gap.  The best run on
 objective favors the weighted entropy variant in the best run.  This supports a
 moderate conclusion: entropy is appropriate for the simplex constraint, but the
 weighted averaging rule is not uniformly dominant on these three objectives.
+The figure also reinforces the parameter-sensitivity conclusion from the
+Euclidean grid: changing \(D\) and \(\gamma_{\mathrm{mult}}\) can matter as much
+as changing from simple to weighted averaging.
 
 \begin{figure}[htbp]
 \centering
@@ -924,7 +985,9 @@ Figure~\ref{fig:simplex-runtime} shows that the entropy runs are slower than the
 small Euclidean benchmark runs, with median runtimes around \(0.6\) seconds.
 That runtime reflects the current implementation and the denser simplex
 projection/prox computations; it should not be interpreted as a lower bound on
-entropy mirror descent.
+entropy mirror descent.  The method conclusion from this plot is that entropy
+prox is geometrically suitable for simplex constraints, but its practical value
+must be judged together with implementation cost.
 
 \begin{figure}[htbp]
 \centering
@@ -972,18 +1035,46 @@ sklearn SAGA & 8 & \(0\) & \(0\) & \(3.75\cdot 10^{-3}\) & \(0.888\) \\
 \label{tab:lasso-summary}
 \end{table}
 
-Figure~\ref{fig:lasso-d} compares the methods over \(D\).  Weighted SDA is the
-most reliable method in this lasso grid: it has the smallest median train-objective gap to the
-SAGA reference and is the best custom method on every dataset in the final-run
-CSV.  This is a statement about this parameter grid, not a general theorem.
-The lasso objective is convex but nonsmooth because of the \(\ell_1\) term, and
-the experiment uses subgradients of the penalty rather than the exact proximal
-regularized dual averaging update studied by Xiao \cite{xiao_regularized_dual_averaging}.
+Figure~\ref{fig:lasso-d} compares the methods over \(D\).  This figure fixes
+\(\gamma_{\mathrm{mult}}=1\) for SDA and \(\alpha=1\) for projected
+subgradient.  Weighted SDA is the most reliable method in this lasso grid: it
+has the smallest median train-objective gap to the SAGA reference and is the
+best custom method on every dataset in the final-run CSV.  This is a statement
+about this parameter grid, not a general theorem.  The lasso objective is
+convex but nonsmooth because of the \(\ell_1\) term, and the experiment uses
+subgradients of the penalty rather than the exact proximal regularized dual
+averaging update studied by Xiao \cite{xiao_regularized_dual_averaging}.
+In the stored final-run CSV, the best custom run for each of the \(8\) lasso
+datasets uses weighted SDA with \(D=8\); the best
+\(\gamma_{\mathrm{mult}}\) varies across datasets from \(0.25\) to \(2\).
+Thus Figure~\ref{fig:lasso-d} supports weighted SDA in this grid, but it also
+shows that the radius and step scale remain empirical choices.  Table~\ref{tab:lasso-negative-d-sweep}
+lists the Figure~\ref{fig:lasso-d} runs where the final train objective is below
+the matched SAGA reference.
+
+\begin{table}[htbp]
+\centering
+\caption{Negative final lasso train-objective gaps in the \(D\)-sweep setting of Figure~\ref{fig:lasso-d}}
+\label{tab:lasso-negative-d-sweep}
+\smallskip
+\small
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llrrrrr}
+\toprule
+Dataset & Method & \(D\) & Train objective & SAGA train objective & Gap to SAGA & Test accuracy \\
+\midrule
+\texttt{breast\_cancer\_wdbc.csv} & Weighted SDA & \(128\) & \(6.7885\cdot 10^{-2}\) & \(6.8065\cdot 10^{-2}\) & \(-1.80\cdot 10^{-4}\) & \(0.947\) \\
+\texttt{spambase.csv} & Weighted SDA & \(32\) & \(2.1506\cdot 10^{-1}\) & \(2.1585\cdot 10^{-1}\) & \(-7.94\cdot 10^{-4}\) & \(0.923\) \\
+\texttt{spambase.csv} & Weighted SDA & \(128\) & \(2.1500\cdot 10^{-1}\) & \(2.1585\cdot 10^{-1}\) & \(-8.47\cdot 10^{-4}\) & \(0.923\) \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{lasso_logistic_sparsity/lasso_d_comparison.pdf}
-\caption{Effect of \(D\) on lasso logistic train-objective gap to the sklearn SAGA reference.}
+\caption{Effect of \(D\) on lasso logistic train-objective gap to the sklearn SAGA reference, with \(\gamma_{\mathrm{mult}}=1\) for SDA and \(\alpha=1\) for projected subgradient.}
 \label{fig:lasso-d}
 \end{figure}
 
@@ -993,12 +1084,14 @@ parameter sensitivity is substantial: a method that is competitive at one step
 scale can be much worse at another.  The absolute train-objective view in
 Figure~\ref{fig:lasso-train} confirms that the smallest train-objective gaps correspond to
 curves approaching the matched SAGA train objective, rather than to an artifact
-of plotting only differences.
+of plotting only differences.  The gap plot uses a signed logarithmic scale
+with a zero line, so negative segments indicate train objectives below the
+matched SAGA reference.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{lasso_logistic_sparsity/lasso_parameter_sweep.pdf}
-\caption{Step-parameter sweep for lasso logistic train-objective gaps at \(D=32\).}
+\caption{Step-parameter sweep for lasso logistic train-objective gaps at \(D=32\), shown on a signed logarithmic scale with zero marked by a dashed line.}
 \label{fig:lasso-param}
 \end{figure}
 
@@ -1029,7 +1122,10 @@ optimized finite-sum solver.  Among the custom solvers, weighted SDA reaches
 near-reference train objective values at runtimes comparable to the other custom
 methods.  Since the SAGA reference is itself numerical, the runtime plot should
 be interpreted as an empirical comparison to a strong implementation baseline,
-not as a certificate of global optimality.
+not as a certificate of global optimality.  The method conclusion is that the
+custom weighted SDA implementation is competitive in train objective within the
+custom solver family, while SAGA remains the appropriate optimized baseline for
+this finite-sum composite problem.
 
 \begin{figure}[htbp]
 \centering
@@ -1132,17 +1228,31 @@ gap should not be conflated.  A true benchmark objective gap measures
 mathematical suboptimality for the specified objective, whereas a lasso
 train-objective gap measures agreement with a strong numerical reference.
 
-Several conclusions are stable across the experiments.  First, the radius
-prox-radius parameter \(D\) and step multiplier \(\gamma_{\mathrm{mult}}\) materially affect
-SDA behavior; the experiments do not support a single universally best setting.
-Second, weighted averaging is often helpful, especially in the lasso runs, but
-it is not uniformly best on every nonsmooth benchmark or every prox geometry.
-Third, geometry must match the problem: entropy prox is appropriate on the
-simplex, while diagonal Euclidean prox helps only when its weights reflect the
-objective anisotropy.  Finally, stochastic sampling should be evaluated by
-runtime and final accuracy together.  In the present SSA comparison, cheaper
-one-sample steps do not reach the same final objective accuracy as weighted
-full-gradient SDA within the same 1000-iteration budget.
+Several conclusions are stable across the experiments.  First, the
+prox-radius parameter \(D\) and step multiplier \(\gamma_{\mathrm{mult}}\)
+materially affect SDA behavior; the experiments do not support a single
+universally best setting.  This is consistent with Nesterov's theory: \(D\) is
+part of the certificate condition, and \(\gamma^\star=L/\sqrt{2D}\) only
+balances a worst-case upper bound.  Second, weighted averaging is often helpful,
+especially in the lasso runs, but it is not uniformly best on every nonsmooth
+benchmark or every prox geometry.  Third, geometry must match the problem:
+entropy prox is appropriate on the simplex, while diagonal Euclidean prox helps
+only when its weights reflect the objective anisotropy.  Finally, stochastic
+sampling should be evaluated by runtime and final accuracy together.  In the
+present SSA comparison, cheaper one-sample steps do not reach the same final
+objective accuracy as weighted full-gradient SDA within the same
+\(1000\)-iteration budget.
+
+The related literature supports these interpretations but does not prove the
+specific empirical rankings in this report.  Nesterov's primal--dual
+subgradient analysis justifies the certificate only under the prox-radius
+condition and gives worst-case black-box rates \cite{nesterov_primal_dual}.
+Mirror-descent analyses explain why changing the prox geometry can help when it
+matches the problem structure \cite{beck_teboulle_mirror}.  Regularized dual
+averaging gives a stronger specialized treatment of \(\ell_1\) regularization
+than the penalty-subgradient implementation used here \cite{xiao_regularized_dual_averaging}.
+SAGA is a specialized finite-sum composite method, so its speed advantage in the
+lasso experiments is expected rather than surprising \cite{defazio_saga}.
 
 \begin{thebibliography}{9}
 
@@ -1160,6 +1270,11 @@ L.~Xiao.
 A.~Defazio, F.~Bach, and S.~Lacoste-Julien.
 \newblock SAGA: A fast incremental gradient method with support for non-strongly convex composite objectives.
 \newblock In \emph{Advances in Neural Information Processing Systems 27}, 2014.
+
+\bibitem{beck_teboulle_mirror}
+A.~Beck and M.~Teboulle.
+\newblock Mirror descent and nonlinear projected subgradient methods for convex optimization.
+\newblock \emph{Operations Research Letters}, 31(3):167--175, 2003.
 
 \bibitem{koh_l1_logistic}
 K.~Koh, S.-J. Kim, and S.~Boyd.

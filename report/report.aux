@@ -25,25 +25,26 @@
 \@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Synthetic logistic dataset generation parameters.}}{7}{table.4}\protected@file@percent }
 \newlabel{tab:synthetic-dataset-params}{{4}{7}{Synthetic logistic dataset generation parameters}{table.4}{}}
 \citation{nesterov_primal_dual}
+\citation{beck_teboulle_mirror}
 \citation{xiao_regularized_dual_averaging}
 \citation{defazio_saga}
 \citation{koh_l1_logistic}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Experiments}{8}{section.3}\protected@file@percent }
 \newlabel{sec:experiments}{{3}{8}{Experiments}{section.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Nonsmooth Objective Grid}{8}{subsection.3.1}\protected@file@percent }
-\newlabel{subsec:nonsmooth-grid}{{3.1}{8}{Nonsmooth Objective Grid}{subsection.3.1}{}}
-\@writefile{toc}{\contentsline {paragraph}{Purpose and setup.}{8}{section*.5}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Aggregate final objective gaps \(f(\hat  x)-f^\star \) for the nonsmooth objective grid.}}{8}{table.5}\protected@file@percent }
-\newlabel{tab:nonsmooth-summary}{{5}{8}{Aggregate final objective gaps \(f(\hat x)-f^\star \) for the nonsmooth objective grid}{table.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Nonsmooth Objective Grid}{9}{subsection.3.1}\protected@file@percent }
+\newlabel{subsec:nonsmooth-grid}{{3.1}{9}{Nonsmooth Objective Grid}{subsection.3.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Purpose and setup.}{9}{section*.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Aggregate final objective gaps \(f(\hat  x)-f^\star \) for the nonsmooth objective grid.}}{9}{table.5}\protected@file@percent }
+\newlabel{tab:nonsmooth-summary}{{5}{9}{Aggregate final objective gaps \(f(\hat x)-f^\star \) for the nonsmooth objective grid}{table.5}{}}
 \@writefile{toc}{\contentsline {paragraph}{Unrestricted SDA and the radius condition.}{9}{section*.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Restricted SDA.}{9}{section*.7}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Default unrestricted simple Euclidean SDA trajectories. The plot illustrates that an invalid radius choice can produce a small or negative primal--dual certificate gap while the true objective gap remains large.}}{10}{figure.1}\protected@file@percent }
 \newlabel{fig:nonsmooth-unrestricted}{{1}{10}{Default unrestricted simple Euclidean SDA trajectories. The plot illustrates that an invalid radius choice can produce a small or negative primal--dual certificate gap while the true objective gap remains large}{figure.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Restricted SDA.}{10}{section*.7}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Default restricted simple Euclidean SDA trajectories. Restricting to \(F_D\) prevents invalid primal--dual-certificate-based stopping, but changes the optimization problem to the prox-ball-restricted problem.}}{11}{figure.2}\protected@file@percent }
 \newlabel{fig:nonsmooth-restricted}{{2}{11}{Default restricted simple Euclidean SDA trajectories. Restricting to \(F_D\) prevents invalid primal--dual-certificate-based stopping, but changes the optimization problem to the prox-ball-restricted problem}{figure.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Step-size and radius sensitivity.}{11}{section*.8}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Current-iterate and averaged-iterate objective gaps for restricted and unrestricted SDA. The trajectories can differ even when the minimizer lies inside the chosen prox radius.}}{12}{figure.3}\protected@file@percent }
 \newlabel{fig:nonsmooth-restriction-gap}{{3}{12}{Current-iterate and averaged-iterate objective gaps for restricted and unrestricted SDA. The trajectories can differ even when the minimizer lies inside the chosen prox radius}{figure.3}{}}
-\@writefile{toc}{\contentsline {paragraph}{Step-size and radius sensitivity.}{13}{section*.8}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Sensitivity of nonsmooth benchmark performance to \(\gamma _{\mathrm  {mult}}\) at fixed \(D=8\). The baseline \(\gamma _{\mathrm  {mult}}=1\) is not uniformly optimal.}}{13}{figure.4}\protected@file@percent }
 \newlabel{fig:nonsmooth-gamma-sweep}{{4}{13}{Sensitivity of nonsmooth benchmark performance to \(\gamma _{\mathrm {mult}}\) at fixed \(D=8\). The baseline \(\gamma _{\mathrm {mult}}=1\) is not uniformly optimal}{figure.4}{}}
 \@writefile{toc}{\contentsline {paragraph}{Method comparison.}{13}{section*.9}\protected@file@percent }
@@ -77,31 +78,38 @@
 \@writefile{toc}{\contentsline {paragraph}{Purpose and setup.}{19}{section*.12}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Lasso logistic final train-objective gaps to the matched sklearn SAGA reference.}}{19}{table.8}\protected@file@percent }
 \newlabel{tab:lasso-summary}{{8}{19}{Lasso logistic final train-objective gaps to the matched sklearn SAGA reference}{table.8}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Effect of \(D\) on lasso logistic train-objective gap to the sklearn SAGA reference.}}{20}{figure.12}\protected@file@percent }
-\newlabel{fig:lasso-d}{{12}{20}{Effect of \(D\) on lasso logistic train-objective gap to the sklearn SAGA reference}{figure.12}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces Step-parameter sweep for lasso logistic train-objective gaps at \(D=32\).}}{21}{figure.13}\protected@file@percent }
-\newlabel{fig:lasso-param}{{13}{21}{Step-parameter sweep for lasso logistic train-objective gaps at \(D=32\)}{figure.13}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Negative final lasso train-objective gaps in the \(D\)-sweep setting of Figure~\ref {fig:lasso-d}}}{20}{table.9}\protected@file@percent }
+\newlabel{tab:lasso-negative-d-sweep}{{9}{20}{Negative final lasso train-objective gaps in the \(D\)-sweep setting of Figure~\ref {fig:lasso-d}}{table.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Effect of \(D\) on lasso logistic train-objective gap to the sklearn SAGA reference, with \(\gamma _{\mathrm  {mult}}=1\) for SDA and \(\alpha =1\) for projected subgradient.}}{20}{figure.12}\protected@file@percent }
+\newlabel{fig:lasso-d}{{12}{20}{Effect of \(D\) on lasso logistic train-objective gap to the sklearn SAGA reference, with \(\gamma _{\mathrm {mult}}=1\) for SDA and \(\alpha =1\) for projected subgradient}{figure.12}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces Step-parameter sweep for lasso logistic train-objective gaps at \(D=32\), shown on a signed logarithmic scale with zero marked by a dashed line.}}{21}{figure.13}\protected@file@percent }
+\newlabel{fig:lasso-param}{{13}{21}{Step-parameter sweep for lasso logistic train-objective gaps at \(D=32\), shown on a signed logarithmic scale with zero marked by a dashed line}{figure.13}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces Absolute train objectives for the lasso parameter sweep, with the sklearn SAGA reference.}}{22}{figure.14}\protected@file@percent }
 \newlabel{fig:lasso-train}{{14}{22}{Absolute train objectives for the lasso parameter sweep, with the sklearn SAGA reference}{figure.14}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces Norms of lasso averaged iterates compared with the sklearn SAGA solution norm.}}{23}{figure.15}\protected@file@percent }
 \newlabel{fig:lasso-norms}{{15}{23}{Norms of lasso averaged iterates compared with the sklearn SAGA solution norm}{figure.15}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces Runtime versus final train-objective gap to sklearn SAGA for lasso logistic datasets.}}{24}{figure.16}\protected@file@percent }
 \newlabel{fig:lasso-runtime}{{16}{24}{Runtime versus final train-objective gap to sklearn SAGA for lasso logistic datasets}{figure.16}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Stochastic Simple Averages versus Weighted SDA on Synthetic Lasso}{24}{subsection.3.5}\protected@file@percent }
-\newlabel{subsec:lasso-ssa}{{3.5}{24}{Stochastic Simple Averages versus Weighted SDA on Synthetic Lasso}{subsection.3.5}{}}
-\@writefile{toc}{\contentsline {paragraph}{Purpose and setup.}{24}{section*.13}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Synthetic-only SSA comparison. Train-objective gaps are measured against matched sklearn SAGA.}}{25}{table.9}\protected@file@percent }
-\newlabel{tab:ssa-summary}{{9}{25}{Synthetic-only SSA comparison. Train-objective gaps are measured against matched sklearn SAGA}{table.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Stochastic Simple Averages versus Weighted SDA on Synthetic Lasso}{25}{subsection.3.5}\protected@file@percent }
+\newlabel{subsec:lasso-ssa}{{3.5}{25}{Stochastic Simple Averages versus Weighted SDA on Synthetic Lasso}{subsection.3.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{Purpose and setup.}{25}{section*.13}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces Synthetic-only SSA comparison. Train-objective gaps are measured against matched sklearn SAGA.}}{25}{table.10}\protected@file@percent }
+\newlabel{tab:ssa-summary}{{10}{25}{Synthetic-only SSA comparison. Train-objective gaps are measured against matched sklearn SAGA}{table.10}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {17}{\ignorespaces Runtime versus final train-objective gap for weighted SDA, SSA, and sklearn SAGA on synthetic lasso datasets.}}{25}{figure.17}\protected@file@percent }
 \newlabel{fig:ssa-runtime}{{17}{25}{Runtime versus final train-objective gap for weighted SDA, SSA, and sklearn SAGA on synthetic lasso datasets}{figure.17}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {18}{\ignorespaces Step multiplier sweep for weighted SDA and SSA on synthetic lasso datasets.}}{26}{figure.18}\protected@file@percent }
 \newlabel{fig:ssa-param}{{18}{26}{Step multiplier sweep for weighted SDA and SSA on synthetic lasso datasets}{figure.18}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {19}{\ignorespaces Absolute train objective values for weighted SDA and SSA, with matched sklearn SAGA references.}}{26}{figure.19}\protected@file@percent }
-\newlabel{fig:ssa-train}{{19}{26}{Absolute train objective values for weighted SDA and SSA, with matched sklearn SAGA references}{figure.19}{}}
+\citation{nesterov_primal_dual}
+\citation{beck_teboulle_mirror}
+\citation{xiao_regularized_dual_averaging}
+\citation{defazio_saga}
 \bibcite{nesterov_primal_dual}{1}
-\bibcite{xiao_regularized_dual_averaging}{2}
-\bibcite{defazio_saga}{3}
-\bibcite{koh_l1_logistic}{4}
+\@writefile{lof}{\contentsline {figure}{\numberline {19}{\ignorespaces Absolute train objective values for weighted SDA and SSA, with matched sklearn SAGA references.}}{27}{figure.19}\protected@file@percent }
+\newlabel{fig:ssa-train}{{19}{27}{Absolute train objective values for weighted SDA and SSA, with matched sklearn SAGA references}{figure.19}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.6}Cross-Experiment Discussion}{27}{subsection.3.6}\protected@file@percent }
 \newlabel{subsec:cross-experiment}{{3.6}{27}{Cross-Experiment Discussion}{subsection.3.6}{}}
-\gdef \@abspage@last{27}
+\bibcite{xiao_regularized_dual_averaging}{2}
+\bibcite{defazio_saga}{3}
+\bibcite{beck_teboulle_mirror}{4}
+\bibcite{koh_l1_logistic}{5}
+\gdef \@abspage@last{28}

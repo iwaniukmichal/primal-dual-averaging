@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.10.22)  3 JUN 2026 20:34
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.10.22)  5 JUN 2026 18:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**report/report.tex
-(./report/report.tex
+**report.tex
+(./report.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 (/usr/local/texlive/2025/texmf-dist/tex/latex/base/article.cls
@@ -321,7 +321,7 @@ File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count301
 \l__pdf_internal_box=\box56
 )
-(report/report.aux)
+(./report.aux)
 \openout1 = `report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
@@ -401,7 +401,7 @@ e
 ))
 Package hyperref Info: Link coloring OFF on input line 18.
 
-(report/report.out) (report/report.out)
+(./report.out) (./report.out)
 \@outlinefile=\write3
 \openout3 = `report.out'.
 
@@ -544,223 +544,224 @@ Underfull \hbox (badness 10000) in paragraph at lines 460--461
 
 [7]
 
-[8{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
+[8]
+
+[9{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 }]
-<figures/nonsmooth_objective_grid/nonsmooth_default_unrestricted.pdf, id=182, 8
+<figures/nonsmooth_objective_grid/nonsmooth_default_unrestricted.pdf, id=190, 8
 95.14902pt x 655.53844pt>
 File: figures/nonsmooth_objective_grid/nonsmooth_default_unrestricted.pdf Graph
 ic file (type pdf)
 <use figures/nonsmooth_objective_grid/nonsmooth_default_unrestricted.pdf>
 Package pdftex.def Info: figures/nonsmooth_objective_grid/nonsmooth_default_unr
-estricted.pdf  used on input line 697.
+estricted.pdf  used on input line 736.
 (pdftex.def)             Requested size: 452.9679pt x 331.71948pt.
-<figures/nonsmooth_objective_grid/nonsmooth_default_restricted.pdf, id=184, 895
+
+
+[10 <./figures/nonsmooth_objective_grid/nonsmooth_default_unrestricted.pdf>]
+<figures/nonsmooth_objective_grid/nonsmooth_default_restricted.pdf, id=206, 895
 .14902pt x 655.53844pt>
 File: figures/nonsmooth_objective_grid/nonsmooth_default_restricted.pdf Graphic
  file (type pdf)
 <use figures/nonsmooth_objective_grid/nonsmooth_default_restricted.pdf>
 Package pdftex.def Info: figures/nonsmooth_objective_grid/nonsmooth_default_res
-tricted.pdf  used on input line 716.
+tricted.pdf  used on input line 755.
 (pdftex.def)             Requested size: 452.9679pt x 331.71948pt.
-<figures/nonsmooth_objective_grid/nonsmooth_restriction_norm_gap.pdf, id=186, 8
+<figures/nonsmooth_objective_grid/nonsmooth_restriction_norm_gap.pdf, id=208, 8
 95.14902pt x 655.63254pt>
 File: figures/nonsmooth_objective_grid/nonsmooth_restriction_norm_gap.pdf Graph
 ic file (type pdf)
 <use figures/nonsmooth_objective_grid/nonsmooth_restriction_norm_gap.pdf>
 Package pdftex.def Info: figures/nonsmooth_objective_grid/nonsmooth_restriction
-_norm_gap.pdf  used on input line 734.
+_norm_gap.pdf  used on input line 773.
 (pdftex.def)             Requested size: 452.9679pt x 331.76709pt.
 
 
-[9]
+[11 <./figures/nonsmooth_objective_grid/nonsmooth_default_restricted.pdf>]
 
-[10 <report/figures/nonsmooth_objective_grid/nonsmooth_default_unrestricted.pdf
->]
-
-[11 <report/figures/nonsmooth_objective_grid/nonsmooth_default_restricted.pdf>]
-
-
-[12 <report/figures/nonsmooth_objective_grid/nonsmooth_restriction_norm_gap.pdf
->]
-<figures/nonsmooth_objective_grid/nonsmooth_gamma_sweep.pdf, id=233, 895.09253p
+[12 <./figures/nonsmooth_objective_grid/nonsmooth_restriction_norm_gap.pdf>]
+<figures/nonsmooth_objective_grid/nonsmooth_gamma_sweep.pdf, id=237, 895.09253p
 t x 666.40717pt>
 File: figures/nonsmooth_objective_grid/nonsmooth_gamma_sweep.pdf Graphic file (
 type pdf)
 <use figures/nonsmooth_objective_grid/nonsmooth_gamma_sweep.pdf>
 Package pdftex.def Info: figures/nonsmooth_objective_grid/nonsmooth_gamma_sweep
-.pdf  used on input line 755.
+.pdf  used on input line 797.
 (pdftex.def)             Requested size: 452.9679pt x 337.24983pt.
-<figures/nonsmooth_objective_grid/nonsmooth_gamma_d_grid.pdf, id=235, 895.09253
+<figures/nonsmooth_objective_grid/nonsmooth_gamma_d_grid.pdf, id=239, 895.09253
 pt x 666.40717pt>
 File: figures/nonsmooth_objective_grid/nonsmooth_gamma_d_grid.pdf Graphic file 
 (type pdf)
 <use figures/nonsmooth_objective_grid/nonsmooth_gamma_d_grid.pdf>
 Package pdftex.def Info: figures/nonsmooth_objective_grid/nonsmooth_gamma_d_gri
-d.pdf  used on input line 774.
+d.pdf  used on input line 817.
 (pdftex.def)             Requested size: 452.9679pt x 337.24983pt.
 
 
-[13 <report/figures/nonsmooth_objective_grid/nonsmooth_gamma_sweep.pdf>]
+[13 <./figures/nonsmooth_objective_grid/nonsmooth_gamma_sweep.pdf>]
 
-[14 <report/figures/nonsmooth_objective_grid/nonsmooth_gamma_d_grid.pdf>]
-<figures/nonsmooth_objective_grid/nonsmooth_method_comparison.pdf, id=271, 895.
+[14 <./figures/nonsmooth_objective_grid/nonsmooth_gamma_d_grid.pdf>]
+<figures/nonsmooth_objective_grid/nonsmooth_method_comparison.pdf, id=275, 895.
 11894pt x 666.46991pt>
 File: figures/nonsmooth_objective_grid/nonsmooth_method_comparison.pdf Graphic 
 file (type pdf)
 <use figures/nonsmooth_objective_grid/nonsmooth_method_comparison.pdf>
 Package pdftex.def Info: figures/nonsmooth_objective_grid/nonsmooth_method_comp
-arison.pdf  used on input line 801.
+arison.pdf  used on input line 850.
 (pdftex.def)             Requested size: 452.9679pt x 337.26125pt.
 <figures/nonsmooth_objective_grid/nonsmooth_runtime_vs_final_objective_gap.pdf,
- id=272, 786.58847pt x 654.66304pt>
+ id=276, 786.58847pt x 654.66304pt>
 File: figures/nonsmooth_objective_grid/nonsmooth_runtime_vs_final_objective_gap
 .pdf Graphic file (type pdf)
 <use figures/nonsmooth_objective_grid/nonsmooth_runtime_vs_final_objective_gap.
 pdf>
 Package pdftex.def Info: figures/nonsmooth_objective_grid/nonsmooth_runtime_vs_
-final_objective_gap.pdf  used on input line 808.
+final_objective_gap.pdf  used on input line 857.
 (pdftex.def)             Requested size: 452.9679pt x 377.0077pt.
 
 
-[15 <report/figures/nonsmooth_objective_grid/nonsmooth_method_comparison.pdf>]
+[15 <./figures/nonsmooth_objective_grid/nonsmooth_method_comparison.pdf>]
 
-[16 <report/figures/nonsmooth_objective_grid/nonsmooth_runtime_vs_final_objecti
-ve_gap.pdf>]
-<figures/prox_geometry_comparison/prox_geometry.pdf, id=325, 895.39027pt x 250.
+[16 <./figures/nonsmooth_objective_grid/nonsmooth_runtime_vs_final_objective_ga
+p.pdf>]
+<figures/prox_geometry_comparison/prox_geometry.pdf, id=330, 895.39027pt x 250.
 25745pt>
 File: figures/prox_geometry_comparison/prox_geometry.pdf Graphic file (type pdf
 )
 <use figures/prox_geometry_comparison/prox_geometry.pdf>
 Package pdftex.def Info: figures/prox_geometry_comparison/prox_geometry.pdf  us
-ed on input line 858.
+ed on input line 913.
 (pdftex.def)             Requested size: 452.9679pt x 126.60239pt.
 <figures/prox_geometry_comparison/prox_runtime_vs_final_objective_gap.pdf, id=3
-28, 786.8598pt x 238.92989pt>
+34, 786.8598pt x 238.92989pt>
 File: figures/prox_geometry_comparison/prox_runtime_vs_final_objective_gap.pdf 
 Graphic file (type pdf)
 <use figures/prox_geometry_comparison/prox_runtime_vs_final_objective_gap.pdf>
 Package pdftex.def Info: figures/prox_geometry_comparison/prox_runtime_vs_final
-_objective_gap.pdf  used on input line 872.
+_objective_gap.pdf  used on input line 930.
 (pdftex.def)             Requested size: 452.9679pt x 137.54402pt.
 
 
-[17 <report/figures/prox_geometry_comparison/prox_geometry.pdf>]
-<figures/simplex_entropy_geometry/simplex_entropy.pdf, id=347, 895.11894pt x 26
+[17 <./figures/prox_geometry_comparison/prox_geometry.pdf>]
+<figures/simplex_entropy_geometry/simplex_entropy.pdf, id=352, 895.11894pt x 26
 1.07915pt>
 File: figures/simplex_entropy_geometry/simplex_entropy.pdf Graphic file (type p
 df)
 <use figures/simplex_entropy_geometry/simplex_entropy.pdf>
 Package pdftex.def Info: figures/simplex_entropy_geometry/simplex_entropy.pdf  
-used on input line 918.
+used on input line 979.
 (pdftex.def)             Requested size: 452.9679pt x 132.1168pt.
 <figures/simplex_entropy_geometry/simplex_runtime_vs_final_objective_gap.pdf, i
-d=349, 786.58847pt x 238.92989pt>
+d=354, 786.58847pt x 238.92989pt>
 File: figures/simplex_entropy_geometry/simplex_runtime_vs_final_objective_gap.p
 df Graphic file (type pdf)
 <use figures/simplex_entropy_geometry/simplex_runtime_vs_final_objective_gap.pd
 f>
 Package pdftex.def Info: figures/simplex_entropy_geometry/simplex_runtime_vs_fi
-nal_objective_gap.pdf  used on input line 931.
+nal_objective_gap.pdf  used on input line 994.
 (pdftex.def)             Requested size: 452.9679pt x 137.59506pt.
 
 
-[18 <report/figures/prox_geometry_comparison/prox_runtime_vs_final_objective_ga
-p.pdf> <report/figures/simplex_entropy_geometry/simplex_entropy.pdf>]
-<figures/lasso_logistic_sparsity/lasso_d_comparison.pdf, id=388, 895.3227pt x 6
-77.26022pt>
+[18 <./figures/prox_geometry_comparison/prox_runtime_vs_final_objective_gap.pdf
+> <./figures/simplex_entropy_geometry/simplex_entropy.pdf>]
+<figures/lasso_logistic_sparsity/lasso_d_comparison.pdf, id=397, 894.36012pt x 
+677.26022pt>
 File: figures/lasso_logistic_sparsity/lasso_d_comparison.pdf Graphic file (type
  pdf)
 <use figures/lasso_logistic_sparsity/lasso_d_comparison.pdf>
 Package pdftex.def Info: figures/lasso_logistic_sparsity/lasso_d_comparison.pdf
-  used on input line 985.
-(pdftex.def)             Requested size: 452.9679pt x 342.63893pt.
-<figures/lasso_logistic_sparsity/lasso_parameter_sweep.pdf, id=391, 894.96706pt
+  used on input line 1076.
+(pdftex.def)             Requested size: 452.9679pt x 343.01096pt.
+
+
+[19 <./figures/simplex_entropy_geometry/simplex_runtime_vs_final_objective_gap.
+pdf>]
+
+[20 <./figures/lasso_logistic_sparsity/lasso_d_comparison.pdf>]
+<figures/lasso_logistic_sparsity/lasso_parameter_sweep.pdf, id=437, 894.36012pt
  x 677.35432pt>
 File: figures/lasso_logistic_sparsity/lasso_parameter_sweep.pdf Graphic file (t
 ype pdf)
 <use figures/lasso_logistic_sparsity/lasso_parameter_sweep.pdf>
 Package pdftex.def Info: figures/lasso_logistic_sparsity/lasso_parameter_sweep.
-pdf  used on input line 1000.
-(pdftex.def)             Requested size: 452.9679pt x 342.83124pt.
+pdf  used on input line 1093.
+(pdftex.def)             Requested size: 452.9679pt x 343.05862pt.
 <figures/lasso_logistic_sparsity/lasso_parameter_sweep_train_objective.pdf, id=
-392, 890.19888pt x 677.35432pt>
+438, 889.7171pt x 677.35432pt>
 File: figures/lasso_logistic_sparsity/lasso_parameter_sweep_train_objective.pdf
  Graphic file (type pdf)
 <use figures/lasso_logistic_sparsity/lasso_parameter_sweep_train_objective.pdf>
 
 Package pdftex.def Info: figures/lasso_logistic_sparsity/lasso_parameter_sweep_
-train_objective.pdf  used on input line 1007.
-(pdftex.def)             Requested size: 452.9679pt x 344.66063pt.
-<figures/lasso_logistic_sparsity/lasso_norms.pdf, id=394, 899.01558pt x 677.260
-22pt>
+train_objective.pdf  used on input line 1100.
+(pdftex.def)             Requested size: 452.9679pt x 344.85701pt.
+<figures/lasso_logistic_sparsity/lasso_norms.pdf, id=440, 898.5338pt x 677.2602
+2pt>
 File: figures/lasso_logistic_sparsity/lasso_norms.pdf Graphic file (type pdf)
 <use figures/lasso_logistic_sparsity/lasso_norms.pdf>
 Package pdftex.def Info: figures/lasso_logistic_sparsity/lasso_norms.pdf  used 
-on input line 1021.
-(pdftex.def)             Requested size: 452.9679pt x 341.23349pt.
-
-
-[19 <report/figures/simplex_entropy_geometry/simplex_runtime_vs_final_objective
-_gap.pdf>]
-
-[20 <report/figures/lasso_logistic_sparsity/lasso_d_comparison.pdf>]
-
-[21 <report/figures/lasso_logistic_sparsity/lasso_parameter_sweep.pdf>]
-
-[22 <report/figures/lasso_logistic_sparsity/lasso_parameter_sweep_train_objecti
-ve.pdf>]
-
-[23 <report/figures/lasso_logistic_sparsity/lasso_norms.pdf>]
+on input line 1114.
+(pdftex.def)             Requested size: 452.9679pt x 341.4195pt.
 <figures/lasso_logistic_sparsity/lasso_runtime_vs_final_objective_gap_to_sklear
-n.pdf, id=484, 786.89136pt x 654.66304pt>
+n.pdf, id=442, 785.95071pt x 654.66304pt>
 File: figures/lasso_logistic_sparsity/lasso_runtime_vs_final_objective_gap_to_s
 klearn.pdf Graphic file (type pdf)
 <use figures/lasso_logistic_sparsity/lasso_runtime_vs_final_objective_gap_to_sk
 learn.pdf>
 Package pdftex.def Info: figures/lasso_logistic_sparsity/lasso_runtime_vs_final
-_objective_gap_to_sklearn.pdf  used on input line 1036.
-(pdftex.def)             Requested size: 452.9679pt x 376.85786pt.
+_objective_gap_to_sklearn.pdf  used on input line 1132.
+(pdftex.def)             Requested size: 452.9679pt x 377.30739pt.
 
 
-[24 <report/figures/lasso_logistic_sparsity/lasso_runtime_vs_final_objective_ga
-p_to_sklearn.pdf>]
+[21 <./figures/lasso_logistic_sparsity/lasso_parameter_sweep.pdf>]
+
+[22 <./figures/lasso_logistic_sparsity/lasso_parameter_sweep_train_objective.pd
+f>]
+
+[23 <./figures/lasso_logistic_sparsity/lasso_norms.pdf>]
+
+[24 <./figures/lasso_logistic_sparsity/lasso_runtime_vs_final_objective_gap_to_
+sklearn.pdf>]
 <figures/lasso_logistic_sparsity_ssa_comparison/lasso_ssa_runtime_vs_final_obje
-ctive_gap_to_sklearn.pdf, id=525, 785.95071pt x 447.03134pt>
+ctive_gap_to_sklearn.pdf, id=533, 785.95071pt x 447.03134pt>
 File: figures/lasso_logistic_sparsity_ssa_comparison/lasso_ssa_runtime_vs_final
 _objective_gap_to_sklearn.pdf Graphic file (type pdf)
 <use figures/lasso_logistic_sparsity_ssa_comparison/lasso_ssa_runtime_vs_final_
 objective_gap_to_sklearn.pdf>
 Package pdftex.def Info: figures/lasso_logistic_sparsity_ssa_comparison/lasso_s
-sa_runtime_vs_final_objective_gap_to_sklearn.pdf  used on input line 1089.
+sa_runtime_vs_final_objective_gap_to_sklearn.pdf  used on input line 1185.
 (pdftex.def)             Requested size: 452.9679pt x 257.64128pt.
+
+
+[25 <./figures/lasso_logistic_sparsity_ssa_comparison/lasso_ssa_runtime_vs_fina
+l_objective_gap_to_sklearn.pdf>]
 <figures/lasso_logistic_sparsity_ssa_comparison/lasso_ssa_parameter_sweep.pdf, 
-id=527, 894.00044pt x 458.39505pt>
+id=564, 894.00044pt x 458.39505pt>
 File: figures/lasso_logistic_sparsity_ssa_comparison/lasso_ssa_parameter_sweep.
 pdf Graphic file (type pdf)
 <use figures/lasso_logistic_sparsity_ssa_comparison/lasso_ssa_parameter_sweep.p
 df>
 Package pdftex.def Info: figures/lasso_logistic_sparsity_ssa_comparison/lasso_s
-sa_parameter_sweep.pdf  used on input line 1103.
+sa_parameter_sweep.pdf  used on input line 1199.
 (pdftex.def)             Requested size: 452.9679pt x 232.26057pt.
 <figures/lasso_logistic_sparsity_ssa_comparison/lasso_ssa_parameter_sweep_train
-_objective.pdf, id=529, 895.52585pt x 469.21674pt>
+_objective.pdf, id=566, 895.52585pt x 469.21674pt>
 File: figures/lasso_logistic_sparsity_ssa_comparison/lasso_ssa_parameter_sweep_
 train_objective.pdf Graphic file (type pdf)
 <use figures/lasso_logistic_sparsity_ssa_comparison/lasso_ssa_parameter_sweep_t
 rain_objective.pdf>
 Package pdftex.def Info: figures/lasso_logistic_sparsity_ssa_comparison/lasso_s
-sa_parameter_sweep_train_objective.pdf  used on input line 1118.
+sa_parameter_sweep_train_objective.pdf  used on input line 1214.
 (pdftex.def)             Requested size: 452.9679pt x 237.33562pt.
 
 
-[25 <report/figures/lasso_logistic_sparsity_ssa_comparison/lasso_ssa_runtime_vs
-_final_objective_gap_to_sklearn.pdf>]
+[26 <./figures/lasso_logistic_sparsity_ssa_comparison/lasso_ssa_parameter_sweep
+.pdf>]
 
-[26 <report/figures/lasso_logistic_sparsity_ssa_comparison/lasso_ssa_parameter_
-sweep.pdf> <report/figures/lasso_logistic_sparsity_ssa_comparison/lasso_ssa_par
-ameter_sweep_train_objective.pdf>]
+[27 <./figures/lasso_logistic_sparsity_ssa_comparison/lasso_ssa_parameter_sweep
+_train_objective.pdf>]
 
-[27] (report/report.aux)
+[28] (./report.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -769,13 +770,13 @@ Package rerunfilecheck Info: File `report.out' has not changed.
 (rerunfilecheck)             Checksum: 091D73057AE3F2B9DC369D8A95588F7F;3074.
  ) 
 Here is how much of TeX's memory you used:
- 10708 strings out of 473190
- 172677 string characters out of 5715799
- 581746 words of memory out of 5000000
- 33706 multiletter control sequences out of 15000+600000
+ 10712 strings out of 473190
+ 172684 string characters out of 5715799
+ 583040 words of memory out of 5000000
+ 33708 multiletter control sequences out of 15000+600000
  572965 words of font info for 90 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,13n,79p,460b,608s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,453b,608s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></
@@ -800,10 +801,10 @@ f-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf
 dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/local/texlive/2025/texmf-di
 st/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texm
 f-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on report/report.pdf (27 pages, 1322253 bytes).
+Output written on report.pdf (28 pages, 1332511 bytes).
 PDF statistics:
- 713 PDF objects out of 1000 (max. 8388607)
- 468 compressed objects within 5 object streams
- 122 named destinations out of 1000 (max. 500000)
+ 731 PDF objects out of 1000 (max. 8388607)
+ 485 compressed objects within 5 object streams
+ 125 named destinations out of 1000 (max. 500000)
  224 words of extra memory for PDF output out of 10000 (max. 10000000)
 

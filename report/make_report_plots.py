@@ -484,7 +484,7 @@ def write_lasso_figures(
             label_func=lambda row: tuning_label(row),
             color_func=lambda row: METHOD_COLORS.get(str(row["method"]), "#555555"),
             style_func=lambda row: tuning_style(row),
-            force_log=True,
+            zero_line=True,
         )
     )
     written.extend(
