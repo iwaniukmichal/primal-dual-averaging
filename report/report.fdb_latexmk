@@ -1,5 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1780678773.47348 "report.tex" "report.pdf" "report" 1780678773.9758 0
+["pdflatex"] 1781989802.10595 "/Users/michaliwaniuk/pda-subgrad-logreg/report/report.tex" "report.pdf" "report" 1781989802.61007 0
+  "/Users/michaliwaniuk/pda-subgrad-logreg/report/report.tex" 1781989801.87005 57783 3d2b2894a63199ec05ae7a86bee58396 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1136768653 1536 02c06700a42be0f5a28664c7273f82e7 ""
@@ -44,6 +45,7 @@
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb" 1248133631 36281 c355509802a035cadc5f15869451dcee ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1248133631 35469 70d41d2b9ea31d5d813066df7c99281c ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1248133631 35752 024fb6c41858982481f6968b5fc26508 ""
+  "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1248133631 32722 d7379af29a190c3f453aba36302ff5a9 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb" 1248133631 32362 179c33bbf43f19adbb3825bb4e36e57a ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1248133631 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1248133631 32762 224316ccc9ad3ca0423a14971cfa7fc1 ""
@@ -136,9 +138,9 @@
   "figures/prox_geometry_comparison/prox_runtime_vs_final_objective_gap.pdf" 1780492691.09377 34806 d8d90a59d1fe8775aded130831e82ef9 ""
   "figures/simplex_entropy_geometry/simplex_entropy.pdf" 1780492692.64907 50287 7a39a26a8d09c1f976b528778bee45a7 ""
   "figures/simplex_entropy_geometry/simplex_runtime_vs_final_objective_gap.pdf" 1780492692.22017 27911 4a0853f82e7f2cfbea6fb337dcd17786 ""
-  "report.aux" 1780678773.89745 15831 dde15e3d9551944595ad44973a9da90b "pdflatex"
-  "report.out" 1780678773.89843 3074 091d73057ae3f2b9dc369d8a95588f7f "pdflatex"
-  "report.tex" 1780678767.35735 59482 58c528e0480a97e0c1eae5924d67ad7e ""
+  "report.aux" 1781989802.54834 15242 0564f3bdcc94bb896358fcf6d447e83a "pdflatex"
+  "report.out" 1781989802.54909 2968 bb4d7b1a04c7d7b5aceb3ed33bb3280d "pdflatex"
+  "report.tex" 1781989801.87005 57783 3d2b2894a63199ec05ae7a86bee58396 ""
   (generated)
   "report.aux"
   "report.log"

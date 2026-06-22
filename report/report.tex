@@ -11,8 +11,8 @@
 \graphicspath{{figures/}{report/figures/}}
 \setlength{\emergencystretch}{2em}
 
-\title{Primal--Dual Subgradient and Dual Averaging Experiments}
-\author{}
+\title{Primal--Dual Subgradient and Dual Averaging}
+\author{Michał Iwaniuk, Mikołaj Guzik}
 \date{}
 
 \begin{document}
@@ -87,16 +87,16 @@ If the selected radius satisfies the required condition
 \]
 then \(x^\star\in F_D\) and the normalized primal--dual certificate gap
 \(\delta_k(D)/S_k\) is an upper bound on the objective error of the averaged iterate
-\(\hat x_k\).  This
-radius condition is essential: when \(x^\star\notin F_D\), the certificate is no
+\(\hat x_k\).  The radius condition is essential: when
+\(x^\star\notin F_D\), the certificate is no
 longer a valid certificate for the original problem and can even become
 negative.  The experiments therefore distinguish the primal--dual certificate
 gap from the benchmark objective gap \(f(\hat x_k)-f^\star\) and from the lasso
 train-objective gap \(F(\hat x_k)-F(x_{\mathrm{saga}})\).
 
-The implemented methods are simple dual averaging (SDA), weighted SDA,
-stochastic simple averages (SSA), and a projected subgradient baseline.  The
-deterministic benchmark experiments use nonsmooth convex objectives with known
+The implemented methods are simple dual averaging (SDA), weighted dual
+averaging (WDA), stochastic simple averages (SSA), and a projected subgradient
+baseline.  The deterministic benchmark experiments use nonsmooth convex objectives with known
 optima, so their objective gap is \(f(\hat x_k)-f^\star\).  The lasso logistic
 experiments use empirical train objectives and compare against a matched
 \texttt{sklearn} SAGA reference; their reported train-objective gap is
@@ -109,8 +109,8 @@ report.
 This section describes the implementation using the same notation as the code.
 The common inputs are an initial point \(x_0\), a prox-radius parameter \(D\), a
 maximum iteration count, a subgradient oracle \(G\), a step multiplier
-\(\gamma_{\mathrm{mult}}\) for the SDA variants, and, for deterministic SDA, a
-stopping tolerance \(\varepsilon\).  The boolean option
+\(\gamma_{\mathrm{mult}}\) for the dual averaging variants, and, for
+deterministic runs, a stopping tolerance \(\varepsilon\).  The boolean option
 \texttt{restrict\_to\_fd} controls whether each new iterate is projected back to
 \(F_D\).  If this option is false, \(D\) is still used in the primal--dual
 certificate gap, but it does not constrain the iterates.
@@ -128,7 +128,7 @@ Symbol & Meaning \\
 \(S_k\) & accumulated averaging weight \\
 \(\hat x_k\) & weighted average of past primal test points \\
 \(D\) & prox-radius parameter defining \(F_D=\{x:d(x)\le D\}\) \\
-\(\delta_k(D)/S_{k+1}\) & normalized primal--dual certificate gap used for deterministic SDA stopping \\
+\(\delta_k(D)/S_{k+1}\) & normalized primal--dual certificate gap used for deterministic dual averaging stopping \\
 \(\gamma\) & prox scale used in \(B_{k+1}=\gamma\hat\beta_{k+1}\) \\
 \(\gamma_{\mathrm{mult}}\) & dimensionless multiplier applied to the baseline \(\gamma^\star\) \\
 \bottomrule
@@ -168,8 +168,8 @@ where
     \xi_D(s)=\max_{x\in F_D}\langle s,x-x_0\rangle .
 \]
 The quantity \(\delta_k(D)/S_{k+1}\) is the primal--dual certificate gap used
-for deterministic SDA stopping.  It is not the same metric as the benchmark
-objective gap or the lasso train-objective gap to SAGA.
+for deterministic dual averaging stopping.  It is not the same metric as the
+benchmark objective gap or the lasso train-objective gap to SAGA.
 
 The code implements three prox geometries.  For the Euclidean prox,
 \[
@@ -260,10 +260,10 @@ For unconstrained Euclidean runs this is
     \end{enumerate}
 \end{enumerate}
 
-\subsection{Weighted Dual Averaging}
+\subsection{Weighted Dual Averaging (WDA)}
 
-Weighted SDA uses the same primal update and the same \(\hat\beta_k\) sequence
-as simple SDA, but changes the aggregation weights to
+WDA uses the same primal update and the same \(\hat\beta_k\) sequence as SDA,
+but changes the aggregation weights to
 \[
     \lambda_k=
     \begin{cases}
@@ -274,8 +274,8 @@ as simple SDA, but changes the aggregation weights to
 This gives each nonzero subgradient a unit dual-norm contribution in the dual
 aggregate, since \(\|\lambda_k g_k\|_*=1\).  The zero-subgradient convention
 prevents division by zero.
-Nesterov's weighted dual averages method is parameterized by \(\rho\), whereas
-the implementation exposes the same \(\gamma\) interface used by SDA.  Since
+In Nesterov's notation, WDA is parameterized by \(\rho\), whereas the
+implementation exposes the same \(\gamma\) interface used by SDA.  Since
 the implemented prox functions use \(\sigma=1\), the code treats
 \[
     \rho=\frac{1}{\gamma},
@@ -498,7 +498,7 @@ forms logits \(a_i^{\mathsf T}\beta+b\), samples
 \(y_i\sim\mathrm{Bernoulli}(\sigma(a_i^{\mathsf T}\beta+b))\), and then flips
 each label independently with probability \(p_{\mathrm{flip}}\).  The recorded
 synthetic parameters are shown in Table~\ref{tab:synthetic-dataset-params}.
-The two larger synthetic datasets are included to stress the weighted SDA
+The two larger synthetic datasets are included to stress WDA
 versus SSA comparison on larger finite-sum lasso objectives.
 
 The public datasets are downloaded and normalized by the script
@@ -585,9 +585,9 @@ and the plotted train-objective gap is
 \]
 Small negative lasso train-objective gaps mean that the reported custom iterate
 has a lower value of the same train objective than the matched finite-iteration
-SAGA run.  They should not be interpreted as proof that the global optimum has
-been reached, because the SAGA value is a numerical reference rather than an
-exact optimum.  SDA also computes a separate primal--dual certificate gap
+SAGA run.  They do not prove that the global optimum has been reached, because
+the SAGA value is a numerical reference rather than an exact optimum.  SDA also
+computes a separate primal--dual certificate gap
 \(\delta_k(D)/S_k\), which is used for stopping.  This primal--dual certificate
 gap is not the same quantity as the objective gaps reported in the tables and
 runtime plots.  When \(D\) is valid, Nesterov's analysis gives
@@ -613,24 +613,12 @@ a fixed \(1000\)-iteration budget when comparing methods and treat
 certificate-based early stopping as an additional SDA diagnostic rather than as
 the only measure of progress.
 
-The experimental design follows the distinction made in Nesterov's
-primal--dual subgradient framework: the method maintains averaged primal
-iterates and a dual aggregate, and the weighted variant changes the scale used
-to aggregate subgradients \cite{nesterov_primal_dual}.  The conclusions below
-should therefore be read against the same theoretical background: the
-guarantees are worst-case \(O(1/\sqrt{k})\) subgradient guarantees that depend
-on a valid prox radius and uniformly bounded subgradients, not predictions that
-one variant dominates every finite benchmark.  The geometry experiments are
-also consistent with the mirror-descent view that the prox should encode useful
-problem geometry rather than an arbitrary norm change
-\cite{beck_teboulle_mirror}.  The stochastic lasso comparison is related to the
-regularized stochastic dual averaging literature, where averaging sampled
-gradients is natural for finite-sum learning objectives
-\cite{xiao_regularized_dual_averaging}.  The SAGA solver is used only as an
-empirical reference for lasso logistic regression because SAGA is designed for
-finite-sum composite objectives with nonsmooth regularizers
-\cite{defazio_saga}; lasso logistic regression is a standard sparse
-classification benchmark class \cite{koh_l1_logistic}.
+The experimental design follows Nesterov's primal--dual subgradient framework:
+the method maintains averaged primal iterates and a dual aggregate, while WDA
+changes the scale used to aggregate subgradients
+\cite{nesterov_primal_dual}.  The comparisons below are empirical.  They
+measure objective gaps, runtimes, and sensitivity to \(D\), prox geometry, and
+step scaling under the implemented solvers and stored experiment grids.
 
 \subsection{Nonsmooth Objective Grid}
 \label{subsec:nonsmooth-grid}
@@ -643,7 +631,7 @@ problems: absolute-value, max-affine, shifted \(\ell_\infty\), weighted
 optimum.  The grid compares:
 \begin{itemize}
     \item simple Euclidean SDA,
-    \item weighted Euclidean SDA,
+    \item Euclidean WDA,
     \item projected subgradient descent.
 \end{itemize}
 For SDA, the grid uses prox-radius parameters
@@ -663,8 +651,8 @@ are included.  Projected subgradient descent uses the same \(D\) values and
 Method & Runs & Median final objective gap & Best objective gap & Median runtime (s) \\
 \midrule
 Projected subgradient & 360 & \(8.35\cdot 10^{-2}\) & \(7.45\cdot 10^{-4}\) & \(4.51\cdot 10^{-3}\) \\
-SDA simple & 432 & \(2.77\cdot 10^{-1}\) & \(3.72\cdot 10^{-4}\) & \(9.35\cdot 10^{-3}\) \\
-SDA weighted & 432 & \(1.75\cdot 10^{-1}\) & \(3.35\cdot 10^{-4}\) & \(1.02\cdot 10^{-2}\) \\
+SDA & 432 & \(2.77\cdot 10^{-1}\) & \(3.72\cdot 10^{-4}\) & \(9.35\cdot 10^{-3}\) \\
+WDA & 432 & \(1.75\cdot 10^{-1}\) & \(3.35\cdot 10^{-4}\) & \(1.02\cdot 10^{-2}\) \\
 \bottomrule
 \end{tabular}
 }
@@ -685,8 +673,7 @@ satisfy
     x^\star\in F_D,
 \]
 where \(F_D=\{x:d(x)\le D\}\) is the prox ball and \(x^\star\) is a minimizer of
-the original problem.  This is not a cosmetic assumption.  If
-\(x^\star\in F_D\), then the subgradient inequality gives
+the original problem.  If \(x^\star\in F_D\), then the subgradient inequality gives
 \[
     f(x_i)-f(x^\star)\le \langle g_i,x_i-x^\star\rangle .
 \]
@@ -702,7 +689,7 @@ Combining this with convexity of \(f\) yields the primal--dual certificate gap
 \[
     f(\hat x_k)-f(x^\star)\le \frac{\delta_k(D)}{S_k}.
 \]
-This is the mathematical reason SDA can safely stop when
+This yields the SDA stopping condition
 \[
     \frac{\delta_k(D)}{S_k}\le \varepsilon
 \]
@@ -718,18 +705,17 @@ problem.  It can certify, at best, behavior relative to the restricted problem
 When the iterates are not themselves restricted to \(F_D\), even this
 restricted-problem interpretation must be read carefully: \(\hat x_k\) may lie
 outside \(F_D\), so the value is not a feasible restricted-solution certificate.
-In this regime a negative computed primal--dual certificate gap is not paradoxical: the
-nonnegativity and upper-bound interpretation of \(\delta_k(D)\) rely on the
-same radius condition.  Therefore a negative value
+In this regime a negative computed primal--dual certificate gap indicates that
+the nonnegativity and upper-bound interpretation of \(\delta_k(D)\) no longer
+applies.  Therefore a negative value
 \(\delta_k(D)/S_k<\varepsilon\) may trigger early stopping even while the true
-objective gap \(f(\hat x_k)-f(x^\star)\) is still large.  This is the main
-phenomenon illustrated by Figure~\ref{fig:nonsmooth-unrestricted}.  In the
+objective gap \(f(\hat x_k)-f(x^\star)\) is still large.  Figure~\ref{fig:nonsmooth-unrestricted}
+illustrates this behavior.  In the
 stored nonsmooth-grid results, \(93\) of the \(864\) SDA runs ended with a
 negative final certificate gap while still having true objective gap larger than
 \(10^{-3}\).  All \(93\) cases were unrestricted runs with \(D\in\{0.5,2\}\).
-This supports the mathematical interpretation: the failure is associated with
-using the certificate outside its radius assumption, not with the objective-gap
-metric itself.
+The failure is associated with using the certificate outside its radius
+assumption, not with the objective-gap metric itself.
 
 \begin{figure}[htbp]
 \centering
@@ -742,8 +728,8 @@ metric itself.
 Figure~\ref{fig:nonsmooth-restricted} repeats the default SDA comparison but
 forces the iterates to remain inside \(F_D\).  In this case the algorithm is
 solving the restricted problem on the prox ball.  The primal--dual certificate gap is then
-consistent with the feasible problem being solved, and the fake early
-convergence caused by an invalid primal--dual certificate gap is removed.  The price is that the
+consistent with the feasible problem being solved, and early stopping caused by
+an invalid primal--dual certificate gap is removed.  The price is that the
 optimization problem has changed: the reported solution is a solution for
 \(\min_{x\in F_D} f(x)\), not necessarily for the original problem over the
 larger ambient set \(Q\).  Thus restriction is useful for illustrating the
@@ -785,10 +771,10 @@ larger values increase the prox regularization and therefore produce smaller
 primal moves in response to the observed subgradients, while smaller values
 weaken the regularization and produce larger moves.  The figure shows that the
 baseline multiplier is not always the best empirical choice in terms of
-objective-gap decrease.  This is mathematically reasonable: the theoretical step
-is based on worst-case bounds, while the benchmark objectives have different
-local geometry, subgradient magnitudes, and distances from the initial point to
-the minimizer.  The method conclusion is that \(\gamma_{\mathrm{mult}}\) should
+objective-gap decrease.  The theoretical step is based on worst-case bounds,
+while the benchmark objectives have different local geometry, subgradient
+magnitudes, and distances from the initial point to the minimizer.  The
+experiments indicate that \(\gamma_{\mathrm{mult}}\) should
 be treated as a tuning parameter around the theoretically balanced scale, not as
 a universally optimal constant.
 
@@ -821,34 +807,31 @@ that choice.
 
 \paragraph{Method comparison.}
 Figures~\ref{fig:nonsmooth-methods} and \ref{fig:nonsmooth-runtime} compare
-simple SDA, weighted SDA, and projected subgradient descent.  On these
+SDA, WDA, and projected subgradient descent.  On these
 benchmark functions, the standard projected subgradient method can behave as
 well as, or better than, SDA for several objectives, and it is usually faster in
 wall-clock time.  Table~\ref{tab:nonsmooth-summary} reflects this: projected
 subgradient has the smallest median final objective gap over the full nonsmooth grid,
-while the best single run is achieved by weighted SDA.  This should not be
-interpreted as a contradiction of SDA theory.  The methods solve slightly
+while the best single run is achieved by WDA.  The methods solve slightly
 different algorithmic subproblems, the grid includes invalid small-radius SDA
 runs, and the theoretical guarantees are worst-case bounds rather than
-predictions of dominance on every small benchmark.  The method-level conclusion
-from Figure~\ref{fig:nonsmooth-methods} is therefore comparative rather than
-absolute: projected subgradient is a strong baseline on these low-dimensional
-benchmarks, while weighted SDA can be best after tuning on some individual
-objectives.
+predictions of dominance on every small benchmark.  In these low-dimensional
+benchmarks, projected subgradient is a strong baseline, while WDA can be best
+after tuning on some individual objectives.
 
 The runtime plot also clarifies why final objective gaps must be read together with the
 radius condition.  Some SDA points with very small runtime and large true
 objective gap correspond to runs that stopped early because \(D\) was too small
-and the computed primal--dual certificate gap became invalid or negative.  These are not
-successful fast convergences.  They are examples of the fake convergence
-mechanism shown in Figure~\ref{fig:nonsmooth-unrestricted}.  Consequently,
+and the computed primal--dual certificate gap became invalid or negative.  They
+are cases of invalid certificate-based early stopping, as shown in
+Figure~\ref{fig:nonsmooth-unrestricted}.  Consequently,
 Figure~\ref{fig:nonsmooth-runtime} should be read as a runtime--accuracy plot
 with certificate validity checked separately.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{nonsmooth_objective_grid/nonsmooth_method_comparison.pdf}
-\caption{Default comparison of simple SDA, weighted SDA, and projected subgradient descent on nonsmooth benchmark objectives.}
+\caption{Default comparison of SDA, WDA, and projected subgradient descent on nonsmooth benchmark objectives.}
 \label{fig:nonsmooth-methods}
 \end{figure}
 
@@ -868,8 +851,8 @@ with certificate validity checked separately.
 The second experiment isolates the effect of the prox geometry.  It uses three
 coordinate-imbalanced nonsmooth objectives: an ill-conditioned shifted
 \(\ell_1\) objective, an ill-conditioned max-affine objective, and a weighted
-\(\ell_1\) objective.  The methods are Euclidean SDA and weighted Euclidean
-SDA, each with simple and weighted dual averaging.  For the weighted Euclidean
+\(\ell_1\) objective.  The methods are Euclidean SDA and Euclidean WDA, each
+with Euclidean and weighted Euclidean prox choices.  For the weighted Euclidean
 prox, three diagonal profiles are tested: uniform, coordinate-matched, and
 inverse-coordinate-matched.  The grid uses
 \(D\in\{2,8,32\}\), \(\gamma_{\mathrm{mult}}\in\{0.5,1,2\}\), and both
@@ -883,10 +866,10 @@ restricted and unrestricted runs, for 432 runs total.
 \toprule
 Method & Runs & Median final objective gap & Best objective gap & Median runtime (s) \\
 \midrule
-SDA simple, Euclidean prox & 54 & \(1.36\) & \(1.24\cdot 10^{-2}\) & \(1.45\cdot 10^{-2}\) \\
-SDA simple, weighted prox & 162 & \(2.18\) & \(1.24\cdot 10^{-2}\) & \(1.60\cdot 10^{-2}\) \\
-SDA weighted, Euclidean prox & 54 & \(3.14\) & \(1.94\cdot 10^{-2}\) & \(1.51\cdot 10^{-2}\) \\
-SDA weighted, weighted prox & 162 & \(2.92\) & \(1.94\cdot 10^{-2}\) & \(1.89\cdot 10^{-2}\) \\
+SDA, Euclidean prox & 54 & \(1.36\) & \(1.24\cdot 10^{-2}\) & \(1.45\cdot 10^{-2}\) \\
+SDA, weighted prox & 162 & \(2.18\) & \(1.24\cdot 10^{-2}\) & \(1.60\cdot 10^{-2}\) \\
+WDA, Euclidean prox & 54 & \(3.14\) & \(1.94\cdot 10^{-2}\) & \(1.51\cdot 10^{-2}\) \\
+WDA, weighted prox & 162 & \(2.92\) & \(1.94\cdot 10^{-2}\) & \(1.89\cdot 10^{-2}\) \\
 \bottomrule
 \end{tabular}
 }
@@ -898,15 +881,15 @@ Figure~\ref{fig:prox-geometry} shows that diagonal geometry is not uniformly
 beneficial.  The coordinate-matched profile can improve behavior on objectives
 whose anisotropy agrees with that profile, but the inverse profile is a useful
 negative control: it emphasizes the wrong coordinates and may slow convergence.
-This is consistent with mirror-descent intuition.  A prox function improves a
-method only when it represents the geometry of the feasible set and the
+The results follow the expected role of a prox function: it improves a method
+only when it represents the geometry of the feasible set and the
 subgradients well; an arbitrary change of norm is not a free acceleration.  The
 selected \(D=32\), \(\gamma_{\mathrm{mult}}=1\), unrestricted runs show this
 directly: the coordinate-scaled simple weighted prox improves the
 ill-conditioned \(\ell_1\) shifted objective relative to the uniform Euclidean
-prox, but the inverse-scaled profile is much worse on the same objective.  The
-method conclusion is that weighted geometry should be justified by coordinate
-scale information, not added automatically.
+prox, but the inverse-scaled profile is much worse on the same objective.
+Weighted geometry should therefore be justified by coordinate scale information,
+not added automatically.
 
 \begin{figure}[htbp]
 \centering
@@ -918,9 +901,9 @@ scale information, not added automatically.
 The runtime summary in Figure~\ref{fig:prox-runtime} leads to the same
 conclusion.  Weighted geometry introduces a small additional computational cost
 in these low-dimensional tests, and its optimization benefit depends on the
-objective.  The median objective gaps in Table~\ref{tab:prox-summary} are therefore best
+objective.  The median objective gaps in Table~\ref{tab:prox-summary} should be
 read together with the per-objective panels rather than as an absolute ranking
-of all geometries.  Thus Figure~\ref{fig:prox-runtime} does not support a
+of all geometries.  Figure~\ref{fig:prox-runtime} does not support a
 runtime-only preference for the weighted prox in this implementation; its value
 is conditional on reducing enough iterations or objective gap to offset the
 extra per-iteration work.
@@ -942,7 +925,7 @@ The third experiment tests entropy prox on simplex-constrained objectives.  The
 simplex is a natural setting for entropy geometry because the primal geometry is
 \(\ell_1\)-like and the dual norm is \(\ell_\infty\).  The objectives are
 \texttt{simplex\_linear\_8d}, \texttt{simplex\_max\_affine\_8d}, and
-\texttt{simplex\_sparse\_max\_affine\_16d}.  Simple and weighted entropy SDA
+\texttt{simplex\_sparse\_max\_affine\_16d}.  Entropy SDA and entropy WDA
 are run with \(D\in\{1,2,3\}\) and
 \(\gamma_{\mathrm{mult}}\in\{0.1,0.5,1,4\}\), for 72 runs total.
 
@@ -954,8 +937,8 @@ are run with \(D\in\{1,2,3\}\) and
 \toprule
 Method & Runs & Median final objective gap & Best objective gap & Median runtime (s) \\
 \midrule
-Entropy SDA simple & 36 & \(8.37\cdot 10^{-3}\) & \(1.09\cdot 10^{-3}\) & \(6.16\cdot 10^{-1}\) \\
-Entropy SDA weighted & 36 & \(8.13\cdot 10^{-3}\) & \(1.09\cdot 10^{-3}\) & \(6.57\cdot 10^{-1}\) \\
+Entropy SDA & 36 & \(8.37\cdot 10^{-3}\) & \(1.09\cdot 10^{-3}\) & \(6.16\cdot 10^{-1}\) \\
+Entropy WDA & 36 & \(8.13\cdot 10^{-3}\) & \(1.09\cdot 10^{-3}\) & \(6.57\cdot 10^{-1}\) \\
 \bottomrule
 \end{tabular}
 }
@@ -963,31 +946,29 @@ Entropy SDA weighted & 36 & \(8.13\cdot 10^{-3}\) & \(1.09\cdot 10^{-3}\) & \(6.
 \label{tab:simplex-summary}
 \end{table}
 
-Figure~\ref{fig:simplex-entropy} shows that the simple and weighted entropy
-variants are close in median final objective gap.  The best run on
+Figure~\ref{fig:simplex-entropy} shows that entropy SDA and entropy WDA are
+close in median final objective gap.  The best run on
 \texttt{simplex\_linear\_8d} is achieved by simple entropy SDA with
 \(D=3\) and \(\gamma_{\mathrm{mult}}=0.1\), while the sparse max-affine
-objective favors the weighted entropy variant in the best run.  This supports a
-moderate conclusion: entropy is appropriate for the simplex constraint, but the
-weighted averaging rule is not uniformly dominant on these three objectives.
-The figure also reinforces the parameter-sensitivity conclusion from the
+objective favors entropy WDA in the best run.  Entropy is appropriate for the
+simplex constraint, but WDA is not uniformly dominant on these three
+objectives.  The figure also shows the parameter sensitivity observed in the
 Euclidean grid: changing \(D\) and \(\gamma_{\mathrm{mult}}\) can matter as much
 as changing from simple to weighted averaging.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{simplex_entropy_geometry/simplex_entropy.pdf}
-\caption{Simple and weighted entropy SDA on simplex-constrained objectives.}
+\caption{Entropy SDA and entropy WDA on simplex-constrained objectives.}
 \label{fig:simplex-entropy}
 \end{figure}
 
 Figure~\ref{fig:simplex-runtime} shows that the entropy runs are slower than the
 small Euclidean benchmark runs, with median runtimes around \(0.6\) seconds.
 That runtime reflects the current implementation and the denser simplex
-projection/prox computations; it should not be interpreted as a lower bound on
-entropy mirror descent.  The method conclusion from this plot is that entropy
-prox is geometrically suitable for simplex constraints, but its practical value
-must be judged together with implementation cost.
+projection/prox computations.  Entropy prox is geometrically suitable for
+simplex constraints, but its practical value must be judged together with
+implementation cost.
 
 \begin{figure}[htbp]
 \centering
@@ -1013,7 +994,7 @@ where the intercept is not penalized.  The current grid uses \(\lambda=1\),
 unrestricted iterates, seed \(0\), and a train/test split of \(0.8/0.2\).
 The datasets are \texttt{iris}, four synthetic logistic datasets,
 \texttt{breast\_cancer\_wdbc}, \texttt{banknote\_authentication}, and
-\texttt{spambase}.  The custom methods are simple SDA, weighted SDA, and
+\texttt{spambase}.  The custom methods are SDA, WDA, and
 projected subgradient; sklearn SAGA is included as the empirical reference.
 
 \begin{table}[htbp]
@@ -1025,8 +1006,8 @@ projected subgradient; sklearn SAGA is included as the empirical reference.
 Method & Runs & Median train-objective gap to SAGA & Best train-objective gap & Median runtime (s) & Median accuracy \\
 \midrule
 Projected subgradient & 72 & \(3.38\cdot 10^{-2}\) & \(4.02\cdot 10^{-4}\) & \(3.60\cdot 10^{-2}\) & \(0.878\) \\
-SDA simple & 96 & \(2.03\cdot 10^{-2}\) & \(6.26\cdot 10^{-5}\) & \(4.29\cdot 10^{-2}\) & \(0.878\) \\
-SDA weighted & 96 & \(1.74\cdot 10^{-5}\) & \(-1.43\cdot 10^{-3}\) & \(3.87\cdot 10^{-2}\) & \(0.888\) \\
+SDA & 96 & \(2.03\cdot 10^{-2}\) & \(6.26\cdot 10^{-5}\) & \(4.29\cdot 10^{-2}\) & \(0.878\) \\
+WDA & 96 & \(1.74\cdot 10^{-5}\) & \(-1.43\cdot 10^{-3}\) & \(3.87\cdot 10^{-2}\) & \(0.888\) \\
 sklearn SAGA & 8 & \(0\) & \(0\) & \(3.75\cdot 10^{-3}\) & \(0.888\) \\
 \bottomrule
 \end{tabular}
@@ -1036,19 +1017,19 @@ sklearn SAGA & 8 & \(0\) & \(0\) & \(3.75\cdot 10^{-3}\) & \(0.888\) \\
 \end{table}
 
 Figure~\ref{fig:lasso-d} compares the methods over \(D\).  This figure fixes
-\(\gamma_{\mathrm{mult}}=1\) for SDA and \(\alpha=1\) for projected
-subgradient.  Weighted SDA is the most reliable method in this lasso grid: it
+\(\gamma_{\mathrm{mult}}=1\) for SDA/WDA and \(\alpha=1\) for projected
+subgradient.  WDA is the most reliable method in this lasso grid: it
 has the smallest median train-objective gap to the SAGA reference and is the
-best custom method on every dataset in the final-run CSV.  This is a statement
-about this parameter grid, not a general theorem.  The lasso objective is
-convex but nonsmooth because of the \(\ell_1\) term, and the experiment uses
-subgradients of the penalty rather than the exact proximal regularized dual
-averaging update studied by Xiao \cite{xiao_regularized_dual_averaging}.
+best custom method on every dataset in the final-run CSV.  This statement
+applies to this parameter grid, not as a general theorem.  The lasso objective is
+convex but nonsmooth because of the \(\ell_1\) term, and the implementation
+handles the penalty with subgradients rather than a specialized proximal
+regularized update.
 In the stored final-run CSV, the best custom run for each of the \(8\) lasso
-datasets uses weighted SDA with \(D=8\); the best
+datasets uses WDA with \(D=8\); the best
 \(\gamma_{\mathrm{mult}}\) varies across datasets from \(0.25\) to \(2\).
-Thus Figure~\ref{fig:lasso-d} supports weighted SDA in this grid, but it also
-shows that the radius and step scale remain empirical choices.  Table~\ref{tab:lasso-negative-d-sweep}
+Figure~\ref{fig:lasso-d} therefore favors WDA in this grid, but it also shows
+that the radius and step scale remain empirical choices.  Table~\ref{tab:lasso-negative-d-sweep}
 lists the Figure~\ref{fig:lasso-d} runs where the final train objective is below
 the matched SAGA reference.
 
@@ -1063,9 +1044,9 @@ the matched SAGA reference.
 \toprule
 Dataset & Method & \(D\) & Train objective & SAGA train objective & Gap to SAGA & Test accuracy \\
 \midrule
-\texttt{breast\_cancer\_wdbc.csv} & Weighted SDA & \(128\) & \(6.7885\cdot 10^{-2}\) & \(6.8065\cdot 10^{-2}\) & \(-1.80\cdot 10^{-4}\) & \(0.947\) \\
-\texttt{spambase.csv} & Weighted SDA & \(32\) & \(2.1506\cdot 10^{-1}\) & \(2.1585\cdot 10^{-1}\) & \(-7.94\cdot 10^{-4}\) & \(0.923\) \\
-\texttt{spambase.csv} & Weighted SDA & \(128\) & \(2.1500\cdot 10^{-1}\) & \(2.1585\cdot 10^{-1}\) & \(-8.47\cdot 10^{-4}\) & \(0.923\) \\
+\texttt{breast\_cancer\_wdbc.csv} & WDA & \(128\) & \(6.7885\cdot 10^{-2}\) & \(6.8065\cdot 10^{-2}\) & \(-1.80\cdot 10^{-4}\) & \(0.947\) \\
+\texttt{spambase.csv} & WDA & \(32\) & \(2.1506\cdot 10^{-1}\) & \(2.1585\cdot 10^{-1}\) & \(-7.94\cdot 10^{-4}\) & \(0.923\) \\
+\texttt{spambase.csv} & WDA & \(128\) & \(2.1500\cdot 10^{-1}\) & \(2.1585\cdot 10^{-1}\) & \(-8.47\cdot 10^{-4}\) & \(0.923\) \\
 \bottomrule
 \end{tabular}
 }
@@ -1074,7 +1055,7 @@ Dataset & Method & \(D\) & Train objective & SAGA train objective & Gap to SAGA 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{lasso_logistic_sparsity/lasso_d_comparison.pdf}
-\caption{Effect of \(D\) on lasso logistic train-objective gap to the sklearn SAGA reference, with \(\gamma_{\mathrm{mult}}=1\) for SDA and \(\alpha=1\) for projected subgradient.}
+\caption{Effect of \(D\) on lasso logistic train-objective gap to the sklearn SAGA reference, with \(\gamma_{\mathrm{mult}}=1\) for SDA/WDA and \(\alpha=1\) for projected subgradient.}
 \label{fig:lasso-d}
 \end{figure}
 
@@ -1117,13 +1098,12 @@ optimality certificate.
 \end{figure}
 
 The runtime plot in Figure~\ref{fig:lasso-runtime} shows that sklearn SAGA is
-faster on these small and medium lasso datasets, which is expected for a highly
-optimized finite-sum solver.  Among the custom solvers, weighted SDA reaches
+faster on these small and medium lasso datasets.  Among the custom solvers, WDA reaches
 near-reference train objective values at runtimes comparable to the other custom
 methods.  Since the SAGA reference is itself numerical, the runtime plot should
 be interpreted as an empirical comparison to a strong implementation baseline,
-not as a certificate of global optimality.  The method conclusion is that the
-custom weighted SDA implementation is competitive in train objective within the
+not as a certificate of global optimality.  The custom WDA implementation is
+competitive in train objective within the
 custom solver family, while SAGA remains the appropriate optimized baseline for
 this finite-sum composite problem.
 
@@ -1136,11 +1116,11 @@ this finite-sum composite problem.
 
 \FloatBarrier
 
-\subsection{Stochastic Simple Averages versus Weighted SDA on Synthetic Lasso}
+\subsection{Stochastic Simple Averages versus WDA on Synthetic Lasso}
 \label{subsec:lasso-ssa}
 
 \paragraph{Purpose and setup.}
-The fifth experiment compares weighted full-gradient SDA with stochastic simple
+The fifth experiment compares full-gradient WDA with stochastic simple
 averages (SSA) on synthetic lasso logistic datasets only.  The synthetic subset
 contains the four original synthetic datasets and two larger generated
 datasets: a sparse 50-dimensional problem with 12000 samples and a noisier
@@ -1160,7 +1140,7 @@ same \(\lambda/n\) scaling as the full objective.
 \toprule
 Method & Runs & Median train-objective gap to SAGA & Best train-objective gap & Median runtime (s) & Median accuracy \\
 \midrule
-SDA weighted & 24 & \(6.95\cdot 10^{-6}\) & \(5.40\cdot 10^{-8}\) & \(4.57\cdot 10^{-2}\) & \(0.840\) \\
+WDA & 24 & \(6.95\cdot 10^{-6}\) & \(5.40\cdot 10^{-8}\) & \(4.57\cdot 10^{-2}\) & \(0.840\) \\
 SSA & 24 & \(4.67\cdot 10^{-2}\) & \(1.53\cdot 10^{-3}\) & \(2.64\cdot 10^{-2}\) & \(0.828\) \\
 sklearn SAGA & 6 & \(0\) & \(0\) & \(2.40\cdot 10^{-3}\) & \(0.840\) \\
 \bottomrule
@@ -1171,24 +1151,23 @@ sklearn SAGA & 6 & \(0\) & \(0\) & \(2.40\cdot 10^{-3}\) & \(0.840\) \\
 \end{table}
 
 The runtime summary in Figure~\ref{fig:ssa-runtime} shows the main trade-off.
-SSA is cheaper per iteration and has a lower median runtime than weighted SDA in
-this grid, but its median final train-objective gap is much larger.  Weighted SDA is slower
+SSA is cheaper per iteration and has a lower median runtime than WDA in
+this grid, but its median final train-objective gap is much larger.  WDA is slower
 because it evaluates the full training gradient, but on these synthetic
-problems it reaches objective values much closer to the SAGA reference.  This is
-mathematically consistent with stochastic approximation: a one-sample
-subgradient has higher variance, so a fixed budget of 1000 iterations is not
-expected to match a deterministic full-gradient method unless the cheaper
+problems it reaches objective values much closer to the SAGA reference.  A
+one-sample subgradient has higher variance, so a fixed budget of 1000 iterations
+does not match a deterministic full-gradient method unless the cheaper
 iterations are numerous enough or the step schedule is better tuned.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{lasso_logistic_sparsity_ssa_comparison/lasso_ssa_runtime_vs_final_objective_gap_to_sklearn.pdf}
-\caption{Runtime versus final train-objective gap for weighted SDA, SSA, and sklearn SAGA on synthetic lasso datasets.}
+\caption{Runtime versus final train-objective gap for WDA, SSA, and sklearn SAGA on synthetic lasso datasets.}
 \label{fig:ssa-runtime}
 \end{figure}
 
 Figure~\ref{fig:ssa-param} shows the \(\gamma_{\mathrm{mult}}\) sweep.  The
-weighted SDA curves usually descend rapidly toward the SAGA reference, while SSA
+WDA curves usually descend rapidly toward the SAGA reference, while SSA
 curves are noisier and flatten at larger train-objective gaps under the current iteration
 budget.  The figure uses a logarithmic \(y\)-axis because the relevant
 differences are multiplicative: train-objective gaps near \(10^{-6}\) and \(10^{-2}\) represent
@@ -1197,7 +1176,7 @@ qualitatively different optimization accuracy.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{lasso_logistic_sparsity_ssa_comparison/lasso_ssa_parameter_sweep.pdf}
-\caption{Step multiplier sweep for weighted SDA and SSA on synthetic lasso datasets.}
+\caption{Step multiplier sweep for WDA and SSA on synthetic lasso datasets.}
 \label{fig:ssa-param}
 \end{figure}
 
@@ -1205,54 +1184,79 @@ The absolute objective plot in Figure~\ref{fig:ssa-train} is a useful check on
 the train-objective-gap plot.  The train objectives remain positive and are shown on a
 logarithmic scale; the SAGA reference line indicates the empirical target.  On
 the large synthetic datasets, the SSA trajectory still improves the objective
-but does not close the train-objective gap to the same degree as weighted SDA.  Thus, for the
+but does not close the train-objective gap to the same degree as WDA.  Thus, for the
 current implementation and budget, stochastic sampling reduces wall-clock cost
 but does not compensate for the loss of full-gradient information.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{lasso_logistic_sparsity_ssa_comparison/lasso_ssa_parameter_sweep_train_objective.pdf}
-\caption{Absolute train objective values for weighted SDA and SSA, with matched sklearn SAGA references.}
+\caption{Absolute train objective values for WDA and SSA, with matched sklearn SAGA references.}
 \label{fig:ssa-train}
 \end{figure}
 
 \FloatBarrier
 
-\subsection{Cross-Experiment Discussion}
-\label{subsec:cross-experiment}
+\section{Conclusions}
+\label{sec:conclusions}
 
-Across the benchmark experiments, the plotted objective gaps are true objective
-gaps to known optima.  Across the lasso experiments, the plotted gaps are
-empirical train-objective gaps to sklearn SAGA.  These two types of objective
-gap should not be conflated.  A true benchmark objective gap measures
-mathematical suboptimality for the specified objective, whereas a lasso
-train-objective gap measures agreement with a strong numerical reference.
+The benchmark and lasso experiments use different reference quantities.  On the
+nonsmooth benchmark objectives, the plotted metric is the true objective gap
+\(f(\hat x_k)-f^\star\).  On the lasso logistic datasets, the plotted metric is
+the train-objective gap \(F(\hat x_k)-F(x_{\mathrm{saga}})\) to the matched
+sklearn SAGA run.  These metrics are more useful for comparing the implemented
+methods than the primal--dual certificate gap when a reference value is
+available.
 
-Several conclusions are stable across the experiments.  First, the
-prox-radius parameter \(D\) and step multiplier \(\gamma_{\mathrm{mult}}\)
-materially affect SDA behavior; the experiments do not support a single
-universally best setting.  This is consistent with Nesterov's theory: \(D\) is
-part of the certificate condition, and \(\gamma^\star=L/\sqrt{2D}\) only
-balances a worst-case upper bound.  Second, weighted averaging is often helpful,
-especially in the lasso runs, but it is not uniformly best on every nonsmooth
-benchmark or every prox geometry.  Third, geometry must match the problem:
-entropy prox is appropriate on the simplex, while diagonal Euclidean prox helps
-only when its weights reflect the objective anisotropy.  Finally, stochastic
-sampling should be evaluated by runtime and final accuracy together.  In the
-present SSA comparison, cheaper one-sample steps do not reach the same final
-objective accuracy as weighted full-gradient SDA within the same
-\(1000\)-iteration budget.
+The primal--dual certificate gap is a valid stopping certificate only under the
+radius condition \(D\ge d(x^\star)\).  Under this condition, Nesterov's bound
+gives
+\[
+    f(\hat x_k)-f^\star \le \frac{\delta_k(D)}{S_k}.
+\]
+Thus the certificate is an upper bound on the direct objective gap, not a
+replacement for measuring \(f(\hat x_k)-f^\star\) when \(f^\star\) is known.
+The experiments show two practical limitations.  First, if \(D\) is too small,
+the certificate can become invalid or negative and may stop the run while the
+true objective gap is still large.  Second, even with a valid radius, the
+certificate can require many more iterations to reach a tolerance than the
+direct objective gap.  For these experiments, the certificate is useful mainly
+as a diagnostic for the primal--dual theory and for checking the radius
+assumption; it is not the best primary performance metric.
 
-The related literature supports these interpretations but does not prove the
-specific empirical rankings in this report.  Nesterov's primal--dual
-subgradient analysis justifies the certificate only under the prox-radius
-condition and gives worst-case black-box rates \cite{nesterov_primal_dual}.
-Mirror-descent analyses explain why changing the prox geometry can help when it
-matches the problem structure \cite{beck_teboulle_mirror}.  Regularized dual
-averaging gives a stronger specialized treatment of \(\ell_1\) regularization
-than the penalty-subgradient implementation used here \cite{xiao_regularized_dual_averaging}.
-SAGA is a specialized finite-sum composite method, so its speed advantage in the
-lasso experiments is expected rather than surprising \cite{defazio_saga}.
+SDA and projected subgradient descent give broadly similar results on several
+experiments.  On the nonsmooth objective grid, projected subgradient has the
+best median final objective gap, while WDA achieves the best single objective
+gap after tuning.  On the lasso logistic grid, SDA improves over projected
+subgradient in median train-objective gap, but the main custom-method
+improvement comes from WDA.  WDA has the smallest median train-objective gap to
+SAGA and is the best custom method on every dataset in the stored final-run
+CSV.  This makes WDA useful for the tested lasso logistic objectives, but the
+same advantage is not uniform on the nonsmooth benchmark objectives or on the
+simplex experiment.
+
+The parameters \(D\) and \(\gamma_{\mathrm{mult}}\) strongly affect all dual
+averaging runs.  The experiments do not support a universal default.  \(D\)
+must be large enough for the certificate interpretation, and changing \(D\)
+also changes the effective theoretical scale
+\(\gamma^\star=L/\sqrt{2D}\).  The multiplier \(\gamma_{\mathrm{mult}}\)
+therefore needs to be tuned together with \(D\), especially when objective-gap
+performance rather than certificate satisfaction is the goal.
+
+Geometry helps only when it matches the problem structure.  Weighted Euclidean
+prox can improve behavior on coordinate-imbalanced objectives when the weights
+match the coordinate scales, but mismatched weights can worsen the final gap.
+Entropy prox is appropriate for simplex-constrained objectives and gives stable
+results there, but the simple and weighted entropy variants have similar median
+final objective gaps in the tested grid.
+
+The stochastic simple averages experiment shows the cost--accuracy trade-off of
+using sampled subgradients.  SSA is cheaper per iteration and has lower median
+runtime in the synthetic lasso comparison, but its final train-objective gaps
+remain much larger than those of full-gradient WDA within the same
+\(1000\)-iteration budget.  For the current implementation, stochastic sampling
+is useful for reducing per-iteration cost, but it does not replace full-gradient
+WDA when the target is a small train-objective gap.
 
 \begin{thebibliography}{9}
 
@@ -1260,26 +1264,6 @@ lasso experiments is expected rather than surprising \cite{defazio_saga}.
 Y.~Nesterov.
 \newblock Primal-dual subgradient methods for convex problems.
 \newblock \emph{Mathematical Programming}, 120:221--259, 2009.
-
-\bibitem{xiao_regularized_dual_averaging}
-L.~Xiao.
-\newblock Dual averaging methods for regularized stochastic learning and online optimization.
-\newblock \emph{Journal of Machine Learning Research}, 11:2543--2596, 2010.
-
-\bibitem{defazio_saga}
-A.~Defazio, F.~Bach, and S.~Lacoste-Julien.
-\newblock SAGA: A fast incremental gradient method with support for non-strongly convex composite objectives.
-\newblock In \emph{Advances in Neural Information Processing Systems 27}, 2014.
-
-\bibitem{beck_teboulle_mirror}
-A.~Beck and M.~Teboulle.
-\newblock Mirror descent and nonlinear projected subgradient methods for convex optimization.
-\newblock \emph{Operations Research Letters}, 31(3):167--175, 2003.
-
-\bibitem{koh_l1_logistic}
-K.~Koh, S.-J. Kim, and S.~Boyd.
-\newblock An interior-point method for large-scale \(\ell_1\)-regularized logistic regression.
-\newblock \emph{Journal of Machine Learning Research}, 8:1519--1555, 2007.
 
 \end{thebibliography}
 
